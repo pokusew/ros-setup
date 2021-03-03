@@ -160,13 +160,13 @@ alias bre='source ~/.bashrc'
 alias bed='nano ~/.bashrc'
 
 # ROS
-export RH_PROJECTS_DIRS="$HOME/remote"
-export RH_ROS_1_INSTALL_DIR="/opt/ros"
-source ~/rh.sh
-rh sw kinetic --silent
-# source /opt/ros/kinetic/setup.bash
-# export ROS_HOSTNAME=ubuntu16-ros
-# export ROS_MASTER_URI=http://ubuntu16-ros:11311
-export ROS_IP=192.168.222.1
-export ROS_MASTER_URI=http://192.168.222.1:11311
+#export RH_PROJECTS_DIRS="$HOME/remote"
+#export RH_ROS_1_INSTALL_DIR="/opt/ros"
+#source ~/rh.sh
+#rh sw kinetic --silent
+## source /opt/ros/kinetic/setup.bash
+## export ROS_HOSTNAME=ubuntu16-ros
+## export ROS_MASTER_URI=http://ubuntu16-ros:11311
+#export ROS_IP=192.168.222.1
+#export ROS_MASTER_URI=http://192.168.222.1:11311
 
