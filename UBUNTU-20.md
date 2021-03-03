@@ -22,6 +22,8 @@
     sudo apt-get update
     sudo apt-get install hstr
 
+11. follow https://docs.ros.org/en/foxy/Installation/Linux-Install-Debians.html
+
 ```
 # ROS
 Host ubuntu16-ros
