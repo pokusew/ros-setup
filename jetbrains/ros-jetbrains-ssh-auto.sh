@@ -37,33 +37,8 @@ __ros_jetbrains_ssh_helper() {
 
 	local ssh_client_server_port="${ssh_client_parts[2]}"
 
-	case $ssh_client_server_port in
-
-	"23")
-		# port 23 <-> ROS 1 /home/pokusew/remote/ros1-tutorial/catkin_ws project
-		source /opt/ros/kinetic/setup.bash
-		if [[ -r /home/pokusew/remote/ros1-tutorial/catkin_ws/devel/setup.bash ]]; then
-			source /home/pokusew/remote/ros1-tutorial/catkin_ws/devel/setup.bash
-		fi
-		# hack for PyCharm Remote Mode bug (used by fake-python.sh wrapper)
-		export PYTHONPATH_COPY="$PYTHONPATH"
-		;;
-
-	"24")
-		# port 24 <-> ROS 1 /home/pokusew/remote/f1tenth/base_overlay project
-		source /opt/ros/kinetic/setup.bash
-		if [[ -r /home/pokusew/remote/f1tenth/base_overlay/devel/setup.bash ]]; then
-			source /home/pokusew/remote/f1tenth/base_overlay/devel/setup.bash
-		fi
-		# hack for PyCharm Remote Mode bug (used by fake-python.sh wrapper)
-		export PYTHONPATH_COPY="$PYTHONPATH"
-		;;
-
-	*)
-		# unknown port <-> ROS project mapping
-		;;
-
-	esac
+	__ros_jetbrains_ssh_helper_on_connection "$ssh_client_server_port"
+	unset __ros_jetbrains_ssh_helper_on_connection
 
 }
 

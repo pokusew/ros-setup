@@ -2,6 +2,41 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+# it is called automatically when ~/ros-jetbrains-ssh-auto.sh is sourced
+# and upon invocation it is automatically also unset
+__ros_jetbrains_ssh_helper_on_connection() {
+
+	# $1 is the SSH port
+	case $1 in
+
+	"23")
+		# port 23 <-> ROS 1 /home/pokusew/remote/ros1-tutorial/catkin_ws project
+		source /opt/ros/kinetic/setup.bash
+		if [[ -r /home/pokusew/remote/ros1-tutorial/catkin_ws/devel/setup.bash ]]; then
+			source /home/pokusew/remote/ros1-tutorial/catkin_ws/devel/setup.bash
+		fi
+		# hack for PyCharm Remote Mode bug (used by fake-python.sh wrapper)
+		export PYTHONPATH_COPY="$PYTHONPATH"
+		;;
+
+	"24")
+		# port 24 <-> ROS 1 /home/pokusew/remote/f1tenth/base_overlay project
+		source /opt/ros/kinetic/setup.bash
+		if [[ -r /home/pokusew/remote/f1tenth/base_overlay/devel/setup.bash ]]; then
+			source /home/pokusew/remote/f1tenth/base_overlay/devel/setup.bash
+		fi
+		# hack for PyCharm Remote Mode bug (used by fake-python.sh wrapper)
+		export PYTHONPATH_COPY="$PYTHONPATH"
+		;;
+
+	*)
+		# unknown port <-> ROS project mapping
+		;;
+
+	esac
+
+}
+
 # If not running interactively, don't do anything
 case $- in
 *i*)
@@ -161,12 +196,65 @@ alias bed='nano ~/.bashrc'
 
 # ROS
 export RH_PROJECTS_DIRS="$HOME/remote"
-export RH_ROS_1_INSTALL_DIR="/opt/ros"
+export RH_ROS_INSTALL_DIRS="/opt/ros"
 source ~/rh.sh
 rh sw kinetic --silent
-# source /opt/ros/kinetic/setup.bash
-# export ROS_HOSTNAME=ubuntu16-ros
-# export ROS_MASTER_URI=http://ubuntu16-ros:11311
-export ROS_IP=192.168.222.1
-export ROS_MASTER_URI=http://192.168.222.1:11311
 
+# TODO: once merge in rh
+# usage: rh-set-master <target>
+# targets:
+# - local
+#     export ROS_HOSTNAME=ubuntu16-ros
+#     export ROS_MASTER_URI=http://ubuntu16-ros:11311
+# - tx2-auto-3
+#     export ROS_IP=192.168.222.1
+#     export ROS_MASTER_URI=http://192.168.222.1:11311
+ros-set-master() {
+
+	local target="$1"
+
+	if [[ -z $target ]]; then
+		echo "current ROS network related config:"
+		[[ -n $ROS_HOSTNAME ]] &&
+			echo "  ROS_HOSTNAME = $ROS_HOSTNAME"
+		[[ -n $ROS_IP ]] &&
+			echo "  ROS_IP = $ROS_IP"
+		[[ -n $ROS_MASTER_URI ]] &&
+			echo "  ROS_MASTER_URI = $ROS_MASTER_URI"
+		echo "use to switch to predefined target: ros-set-master <target>"
+		return 0
+	fi
+
+	unset ROS_HOSTNAME
+	unset ROS_IP
+	unset ROS_MASTER_URI
+
+	case $target in
+
+	"local")
+		export ROS_HOSTNAME=ubuntu16-ros
+		export ROS_MASTER_URI=http://ubuntu16-ros:11311
+		rh env
+		return 0
+		;;
+
+	"tx2-auto-3")
+		export ROS_IP=192.168.222.1
+		export ROS_MASTER_URI=http://192.168.222.1:11311
+		rh env
+		return 0
+		;;
+
+	*)
+		echo "unknown target '$target'"
+		return 1
+		;;
+
+	esac
+
+}
+
+# register word-list autocompletion for rh-set-master command
+complete -W "local tx2-auto-3" ros-set-master
+
+ros-set-master "local" >/dev/null 2>&1
