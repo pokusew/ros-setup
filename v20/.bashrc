@@ -198,7 +198,7 @@ alias bed='nano ~/.bashrc'
 export RH_PROJECTS_DIRS="$HOME/remote"
 export RH_ROS_INSTALL_DIRS="/opt/ros"
 source ~/rh.sh
-# rh sw kinetic --silent
+rh sw foxy --silent
 
 # TODO: once merge in rh
 # usage: rh-set-master <target>
