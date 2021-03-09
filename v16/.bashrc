@@ -194,6 +194,39 @@ export EDITOR="nano"
 alias bre='source ~/.bashrc'
 alias bed='nano ~/.bashrc'
 
+###
+# Git shortcuts
+###
+alias gst="git status"
+# gh is GitHub CLI (https://github.com/cli/cli)
+alias gho="gh repo view --web"
+# see https://git-scm.com/docs/git-log
+# see https://stackoverflow.com/a/1441062
+alias glog2="git log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=short-local"
+# see https://stackoverflow.com/a/9463536
+# show "G" for a good (valid) signature,
+# "B" for a bad signature,
+# "U" for a good signature with unknown validity,
+# "X" for a good signature that has expired,
+# "Y" for a good signature made by an expired key,
+# "R" for a good signature made by a revoked key,
+# "E" if the signature cannot be checked (e.g. missing key) and "N" for no signature
+alias glog="git log --pretty=format:'%C(auto,yellow)%h%C(auto,magenta)% G? %C(auto,blue)%ad %C(auto,green)%aN%C(auto,red)%d%C(auto,reset) %s' --date=format-local:'%Y-%m-%d %H:%M'"
+alias glog-tags="glog --no-walk --all" # optionally use --tags instead of --all
+gapr() {
+	echo "Running after PR rebase sequence ..."
+	echo "branch = '$1'"
+	if [[ -z $1 ]]; then
+		echo "No branch specified!"
+		return 1
+	fi
+	git checkout master &&
+		git push origin ":$1" &&
+		git pull && git fetch --all --prune &&
+		git branch -D "$1" &&
+		echo "Finished."
+}
+
 # ROS
 export RH_PROJECTS_DIRS="$HOME/remote"
 export RH_ROS_INSTALL_DIRS="/opt/ros"
