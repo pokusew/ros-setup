@@ -18,6 +18,10 @@ if [[ $options == "--all" ]]; then
 	scp "$version/sshd_config" "$remote":/tmp/sshd_config
 	ssh "$remote" "sudo -S cp /tmp/sshd_config /etc/ssh/sshd_config"
 fi
+if [[ -r "$version/.tmux.conf" ]]; then
+	echo "... uploading $version/.tmux.conf"
+	scp "$version/.tmux.conf" "$remote":.tmux.conf
+fi
 
 echo "... uploading jetbrains/ros-jetbrains-ssh-auto.sh"
 scp jetbrains/ros-jetbrains-ssh-auto.sh "$remote":ros-jetbrains-ssh-auto.sh
