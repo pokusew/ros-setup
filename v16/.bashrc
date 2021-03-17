@@ -98,6 +98,9 @@ fi
 ###
 # shellcheck source=../bash-powerline.sh
 source "$HOME/pokusew-bash-powerline.sh"
+# shellcheck disable=SC2034
+# enables login@hostname in pokusew-bash-powerline prompt
+POWERLINE_LOGIN=1
 
 ###
 # enable color support of ls and also add handy aliases

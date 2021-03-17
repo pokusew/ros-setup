@@ -79,21 +79,23 @@ Follow https://docs.ros.org/en/foxy/Installation/Linux-Install-Debians.html
 
 ### Copy my custom scripts and configs
 
-* (TODO: add script) [rh.sh](https://github.com/pokusew/rh)
+It copies and configures:
+* [rh.sh](https://github.com/pokusew/rh) – _a simple helper to make working with ROS easier_
+* (TODO: fix add link once published) **pokusew-bash-powerline.sh**
+* `~/.bashrc` (fully setup ROS, rh, HSTR and more)
+* `~/.tmux.conf`
+* `/etc/ssh/sshd_config` (only when `upload.sh --all` option is used, see below)
+* see contents of [upload.sh](../scripts/upload.sh) script for more info
 
-* (TODO: fix script) **pokusew-bash-powerline.sh**  
-    Run in the root of this project (`ubuntu-ros`) on your local machine:
-    ```bash
-    ./scripts/pokusew-bash-powerline-install.sh ubuntu20-ros
-    ```
+Run in the root of this project (`ubuntu-ros`) on your local machine:
+```bash
+./scripts/upload.sh v20 ubuntu20-ros --all
+```
 
-* **.bashrc and sshd_config and various others**  
-    Run in the root of this project (`ubuntu-ros`) on your local machine:
-    ```bash
-    ./scripts/upload.sh v20 ubuntu20-ros --all
-    ```
+You will be prompted to enter your sudo password on the remote machine
+(only if using `--all` option that attempts to change `/etc/ssh/sshd_config`).
 
-* restart SSH service on the remote machine
-    ```bash
-    ssh -S ubuntu20-ros "sudo systemctl restart ssh"
-    ```
+Then, restart SSH service on the remote machine (so the `/etc/ssh/sshd_config` takes effect):
+```bash
+ssh -S ubuntu20-ros "sudo systemctl restart ssh"
+```

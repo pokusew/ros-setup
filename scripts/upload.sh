@@ -11,6 +11,24 @@ if [[ -z $version || -z $remote ]]; then
 	exit 1
 fi
 
+if [[ -z $POKUSEW_BASH_POWERLINE_SRC ]]; then
+	POKUSEW_BASH_POWERLINE_SRC="/Users/pokusew/Sites/pokusew-macos-setup/src/bash-powerline.sh"
+fi
+
+if [[ -z $RH_SRC ]]; then
+	RH_SRC="/Users/pokusew/Sites/ros/rh/rh.sh"
+fi
+
+echo "using the following paths (use env variables to change them):"
+echo "  POKUSEW_BASH_POWERLINE_SRC = $POKUSEW_BASH_POWERLINE_SRC"
+echo "  RH_SRC = $RH_SRC"
+
+echo "... uploading pokusew-bash-powerline.sh (source: $POKUSEW_BASH_POWERLINE_SRC)"
+scp "$POKUSEW_BASH_POWERLINE_SRC" "$remote":pokusew-bash-powerline.sh
+
+echo "... uploading rh.sh (source: $RH_SRC)"
+scp "$RH_SRC" "$remote":rh.sh
+
 echo "... uploading $version/.bashrc"
 scp "$version/.bashrc" "$remote":.bashrc
 if [[ $options == "--all" ]]; then
