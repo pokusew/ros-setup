@@ -199,7 +199,7 @@ gapr() {
 ###
 # ROS
 ###
-export RH_PROJECTS_DIRS="$HOME/remote"
+export RH_PROJECTS_DIRS="$HOME/code:$HOME/remote"
 export RH_ROS_INSTALL_DIRS="/opt/ros"
 # shellcheck disable=SC1090
 source ~/rh.sh
