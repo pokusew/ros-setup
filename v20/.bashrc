@@ -283,3 +283,5 @@ source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
 #     UserWarning: The environment variable 'COLCON_EXTENSION_BLACKLIST' has been deprecated,
 #     use 'COLCON_EXTENSION_BLOCKLIST' instead
 export COLCON_EXTENSION_BLOCKLIST="colcon_core.event_handler.desktop_notification"
+
+alias ros-create-package-ros2-default='ros2 pkg create --license "Apache License 2.0" --maintainer-email "pokusew@seznam.cz" --maintainer-name "Martin Endler" '
