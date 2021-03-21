@@ -1,0 +1,8 @@
+# SSH user config file
+# ~/.ssh/config
+# man ssh_config
+# see https://nerderati.com/2011/03/17/simplify-your-life-with-an-ssh-config-file/
+
+Host github.com
+	AddKeysToAgent yes
+	IdentityFile ~/.ssh/github_rsa

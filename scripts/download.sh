@@ -10,4 +10,5 @@ if [[ -z $version || -z $remote ]]; then
 	exit 1
 fi
 
-scp "$remote:.bashrc .bash_history /etc/ssh/sshd_config" "$version"
+scp "$remote:.bashrc .bash_history .gitconfig .nanorc /etc/ssh/sshd_config" "$version"
+scp "$remote:.ssh/config" "$version/ssh_config"

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# TODO: refactor
+
 set -e
 
 version="$1"
@@ -39,6 +41,18 @@ fi
 if [[ -r "$version/.tmux.conf" ]]; then
 	echo "... uploading $version/.tmux.conf"
 	scp "$version/.tmux.conf" "$remote":.tmux.conf
+fi
+if [[ -r "$version/.gitconfig" ]]; then
+	echo "... uploading $version/.gitconfig"
+	scp "$version/.gitconfig" "$remote":.gitconfig
+fi
+if [[ -r "$version/.nanorc" ]]; then
+	echo "... uploading $version/.nanorc"
+	scp "$version/.nanorc" "$remote":.nanorc
+fi
+if [[ -r "$version/ssh_config" ]]; then
+	echo "... uploading $version/ssh_config to ~/.ssh/config"
+	scp "$version/ssh_config" "$remote":.ssh/config
 fi
 
 echo "... uploading jetbrains/ros-jetbrains-ssh-auto.sh"
