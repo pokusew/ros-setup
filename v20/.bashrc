@@ -216,8 +216,9 @@ gapr() {
 ###
 export RH_PROJECTS_DIRS="$HOME/code:$HOME/remote"
 export RH_ROS_INSTALL_DIRS="/opt/ros"
+export RH_SRC="$HOME/rh.sh"
 # shellcheck disable=SC1090
-source ~/rh.sh
+source "$RH_SRC"
 rh sw foxy --silent
 # ROS_DOMAIN_ID: The domain ID is used to segment the network in order to avoid interference
 # between different groups of computers running ROS 2 on the same local area network.
