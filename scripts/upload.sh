@@ -60,6 +60,6 @@ scp jetbrains/ros-jetbrains-ssh-auto.sh "$remote":ros-jetbrains-ssh-auto.sh
 echo "... uploading jetbrains/fake_python.sh"
 scp jetbrains/fake_python.sh "$remote":fake_python.sh
 
-echo "... uploading vscode/create-dot-env.sh"
+echo "... uploading vscode/ros-vsc-sync.sh"
 ssh "$remote" "mkdir -p bin"
-scp vscode/create-dot-env.sh "$remote":bin/create-dot-env.sh
+scp vscode/ros-vsc-sync.sh "$remote":bin/ros-vsc-sync.sh
