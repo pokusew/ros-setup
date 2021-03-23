@@ -62,4 +62,4 @@ scp jetbrains/fake_python.sh "$remote":fake_python.sh
 
 echo "... uploading vscode/ros-vsc-sync.sh"
 ssh "$remote" "mkdir -p bin"
-scp vscode/ros-vsc-sync.sh "$remote":bin/ros-vsc-sync.sh
+scp vscode/ros-vsc-sync.sh "$remote":bin/ros-vsc-sync

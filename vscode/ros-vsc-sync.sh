@@ -2,13 +2,53 @@
 
 # see https://github.com/pokusew/ubuntu-ros/blob/master/vscode/README.md
 
+find_project_root() {
+
+	local dir="$PWD"
+	local project_root
+
+	while :; do
+
+		local project_file="$dir/.rh_project"
+
+		# echo "trying ${project_file}"
+
+		if [[ -r $project_file ]]; then
+			project_root="$dir"
+			break
+		fi
+
+		# if "-s" is passed as first argument
+		# stop and do not traverse up
+		if [[ $1 == "-s" ]]; then
+			break
+		fi
+
+		# this is root (project_file="/.rh_project")
+		# nowhere to continue > stop
+		if [[ $dir == "" ]]; then
+			break
+		fi
+
+		# https://unix.stackexchange.com/a/462705
+		dir="${dir%/*}"
+
+	done
+
+	if [[ -n $project_root ]]; then
+		echo "$project_root"
+		return 0
+	fi
+
+	return 1
+
+}
+
 source_workspace_env() {
 
-	rh wcd >&2
-
 	local setup_files_to_try=(
-		'install/setup.bash'
-		'devel/setup.bash'
+		"$1/install/setup.bash"
+		"$1/devel/setup.bash"
 	)
 
 	for setup_file in "${setup_files_to_try[@]}"; do
@@ -32,6 +72,10 @@ source_workspace_env() {
 
 update_vscode_settings() {
 
+	echo "updating $PWD/.vscode/settings.json ..."
+
+	mkdir -p .vscode
+
 	python3 "-" "$1" <<"EOF"
 import sys
 import json
@@ -50,7 +94,7 @@ try:
 		try:
 			settings = json.load(settings_file)
 		except json.JSONDecodeError as err:
-			print(f'JSONDecodeError while parsing {settings_file_name}: {err}', file=sys.stderr)
+			print(f'  JSONDecodeError while parsing {settings_file_name}: {err}', file=sys.stderr)
 
 		if not isinstance(settings, dict):
 			settings = {}
@@ -64,20 +108,20 @@ try:
 		settings_file.write('\n');
 
 except FileNotFoundError as err:
-	print(err, file=sys.stderr)
+	print(f'  FileNotFoundError: {err}', file=sys.stderr)
 EOF
+
+	echo "  >>> updated $PWD/.vscode/settings.json"
 
 }
 
-update_dot_env() {
+update_dot_env_file() {
+	echo "updating $PWD/.env file ..."
 	echo "PYTHONPATH=$1" >.env
-	echo "created .env file with the following content:"
-	cat .env
+	echo "  >>> created $PWD/.env file"
 }
 
 get_compilation_db() {
-
-	rh wcd >&2
 
 	if [[ -r build/compile_commands.json ]]; then
 		echo "$PWD/build/compile_commands.json"
@@ -88,17 +132,27 @@ get_compilation_db() {
 
 }
 
-if SOURCED_PYTHONPATH=$(source_workspace_env); then
-	mkdir -p .vscode
-	update_dot_env "$SOURCED_PYTHONPATH"
-	update_vscode_settings "$SOURCED_PYTHONPATH"
-else
-	echo "nothing created"
+if ! RH_PROJECT_ROOT=$(find_project_root "$@"); then
+	echo "no project root found"
 	exit 1
 fi
 
-if COMPILATION_DB_PATH=$(get_compilation_db); then
-	if [[ ! -e compile_commands.json ]]; then
-		ln -s "$COMPILATION_DB_PATH" compile_commands.json
-	fi
+cd "$RH_PROJECT_ROOT" || exit 1
+echo "project root = $PWD"
+# shellcheck disable=SC1090
+source "$RH_PROJECT_ROOT/.rh_project"
+if [[ -z $RH_WORKSPACE_ROOT ]]; then
+	echo "RH_WORKSPACE_ROOT is not set"
+	exit 1
+fi
+echo "workspace root = $RH_WORKSPACE_ROOT"
+
+if SOURCED_PYTHONPATH=$(source_workspace_env "$RH_WORKSPACE_ROOT"); then
+	update_dot_env_file "$SOURCED_PYTHONPATH"
+	update_vscode_settings "$SOURCED_PYTHONPATH"
+fi
+
+if [[ -r $RH_WORKSPACE_ROOT/build/compile_commands.json && ! -e compile_commands.json ]]; then
+	ln -s "$RH_WORKSPACE_ROOT/build/compile_commands.json" compile_commands.json
+	echo "created symlink to compile_commands.json in project root"
 fi
