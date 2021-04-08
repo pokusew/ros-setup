@@ -10,7 +10,11 @@
 # possible, but leave them commented.  Uncommented options override the
 # default value.
 
-#Port 22
+# What ports, IPs and protocols we listen for
+Port 22
+Port 23
+Port 24
+Port 25
 #AddressFamily any
 #ListenAddress 0.0.0.0
 #ListenAddress ::
@@ -109,7 +113,7 @@ PrintMotd no
 #Banner none
 
 # Allow client to pass locale environment variables
-AcceptEnv LANG LC_*
+AcceptEnv LANG LC_* DISPLAY SOURCE_ROS_NON_INTERACTIVE ROS_JETBRAINS_*
 
 # override default of no subsystems
 Subsystem	sftp	/usr/lib/openssh/sftp-server
