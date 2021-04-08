@@ -6,3 +6,4 @@ See:
 * [notes for Ubuntu 20 with ROS 2](./v20/README.md)
 * [notes for VSCode](./vscode/README.md)
 * [notes for JetBrain's IDEs (CLion, PyCharm)](./jetbrains/README.md)
+* [notes for NVIDIA Jetson TX2](./nvidia-jetson-tx2/README.md)
