@@ -25,4 +25,5 @@ TODO
 
 ## Related links
 
-* TODO
+* https://www.jetbrains.com/help/clion/ros-setup-tutorial.html
+* https://github.com/duckietown/hatchery
