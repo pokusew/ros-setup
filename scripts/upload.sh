@@ -14,7 +14,7 @@ if [[ -z $version || -z $remote ]]; then
 fi
 
 if [[ -z $POKUSEW_BASH_POWERLINE_SRC ]]; then
-	POKUSEW_BASH_POWERLINE_SRC="/Users/pokusew/Sites/pokusew-macos-setup/src/bash-powerline.sh"
+	POKUSEW_BASH_POWERLINE_SRC="/Users/pokusew/Sites/pokusew-macos-setup/src/pokusew-bash-powerline.sh"
 fi
 
 if [[ -z $RH_SRC ]]; then
