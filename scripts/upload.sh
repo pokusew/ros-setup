@@ -54,6 +54,10 @@ if [[ -r "$version/ssh_config" ]]; then
 	echo "... uploading $version/ssh_config to ~/.ssh/config"
 	scp "$version/ssh_config" "$remote":.ssh/config
 fi
+if [[ -r "$version/htoprc" ]]; then
+	echo "... uploading $version/htoprc to ~/.config/htop/htoprc"
+	scp "$version/htoprc" "$remote":.config/htop/htoprc
+fi
 
 echo "... uploading jetbrains/ros-jetbrains-ssh-auto.sh"
 scp jetbrains/ros-jetbrains-ssh-auto.sh "$remote":ros-jetbrains-ssh-auto.sh
