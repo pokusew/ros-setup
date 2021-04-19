@@ -67,15 +67,35 @@ cd ./build/tarball && ./tarball-automake.sh && cd ../..
 sudo make install
 ```
 
-No-need for configuration now. It will be done in the next step. Read below.
+No-need for configuration now. It will be done in the next steps. Read below.
+
+
+### Install tmux
+
+[tmux](https://github.com/tmux/tmux) is a great terminal multiplexer.
+
+Install from sources (as the builds for ARMv8 are outdated):
+```bash
+# missing needed dependencies
+sudo apt install libevent-dev libncurses5-dev
+
+# tmux
+cd ~/code
+git clone https://github.com/tmux/tmux.git
+git checkout 3.2
+cd tmux
+sh autogen.sh
+./configure && make
+sudo make install
+```
+
+No-need for configuration now. It will be done in the next steps. Read below.
 
 
 ### Install other useful utils
 
-* https://github.com/tmux/tmux
-
 ```bash
-sudo apt install tmux nano
+sudo apt install nano
 ```
 
 
@@ -104,5 +124,5 @@ You will be prompted to enter your sudo password on the remote machine
 
 Then, restart SSH service on the remote machine (so the `/etc/ssh/sshd_config` takes effect):
 ```bash
-ssh -S tx2-ros2 "sudo systemctl restart ssh"
+ssh tx2-ros2 "sudo -S systemctl restart ssh"
 ```
