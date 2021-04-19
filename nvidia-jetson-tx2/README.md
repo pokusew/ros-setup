@@ -31,6 +31,8 @@ JetPack is currently based on Ubuntu 18.
 
 * [SDK Manager + Ubuntu 20.04 LTS (NVIDIA Developer Forums)](https://forums.developer.nvidia.com/t/sdk-manager-ubuntu-20-04-lts/125711)
     * https://github.com/jungin500/nvidia-sdk-manager-gui-docker
+    * https://docs.nvidia.com/sdk-manager/docker-containers/index.html
+    * https://developer.nvidia.com/nvidia-sdk-manager
 
 
 ## SD Card
