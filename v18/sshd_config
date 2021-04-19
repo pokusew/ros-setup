@@ -113,7 +113,7 @@ PrintMotd no
 #Banner none
 
 # Allow client to pass locale environment variables
-AcceptEnv LANG LC_* DISPLAY SOURCE_ROS_NON_INTERACTIVE ROS_JETBRAINS_*
+AcceptEnv LANG LC_* DISPLAY SOURCE_ROS_NON_INTERACTIVE ROS_JETBRAINS_* POWERLINE_*
 
 # override default of no subsystems
 Subsystem	sftp	/usr/lib/openssh/sftp-server

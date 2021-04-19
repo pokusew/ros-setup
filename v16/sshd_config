@@ -75,7 +75,7 @@ TCPKeepAlive yes
 #Banner /etc/issue.net
 
 # Allow client to pass locale environment variables
-AcceptEnv LANG LC_* DISPLAY SOURCE_ROS_NON_INTERACTIVE ROS_JETBRAINS_*
+AcceptEnv LANG LC_* DISPLAY SOURCE_ROS_NON_INTERACTIVE ROS_JETBRAINS_* POWERLINE_*
 
 Subsystem sftp /usr/lib/openssh/sftp-server
 
