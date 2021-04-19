@@ -93,14 +93,13 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
 fi
 
 ###
-# bash-powerline
+# pokusew-bash-powerline
 # Powerline for Bash in pure Bash script.
 ###
-# shellcheck source=../bash-powerline.sh
-source "$HOME/pokusew-bash-powerline.sh"
 # shellcheck disable=SC2034
 # enables login@hostname in pokusew-bash-powerline prompt
 POWERLINE_LOGIN=1
+source "$HOME/pokusew-bash-powerline.sh"
 
 ###
 # enable color support of ls and also add handy aliases
