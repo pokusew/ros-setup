@@ -16,14 +16,13 @@ _Note: These are currently rather my personal notes on setting up an Ubuntu 20 V
 
 ### Set custom hostname
 
-**Note!** Before changing hostname in _Settings > About_,
-ensure that _/etc/hosts_ contains the entry `127.0.1.1	some-new-hostname`.
-Otherwise, a lot of commands will stop working (incl. `sudo`).
+**Note!** Before changing hostname in _Settings > About_, ensure that _/etc/hosts_ contains the
+entry `127.0.1.1	some-new-hostname`. Otherwise, a lot of commands will stop working (incl. `sudo`).
 
 1. ensure /etc/hosts contains the entry with the new hostname
-   * type ```sudo nano /etc/hosts```
-   * add ```127.0.1.1	ubuntu20-ros```
-   * save and exit (Ctrl-O Ctrl-X)
+	* type `sudo nano /etc/hosts`
+	* add `127.0.1.1	ubuntu20-ros`
+	* save and exit (Ctrl-O Ctrl-X)
 2. change hostname to `ubuntu20-ros` in _Settings > About_
 3. `sudo reboot`
 
@@ -45,18 +44,17 @@ Otherwise, a lot of commands will stop working (incl. `sudo`).
         # DISPLAY=:0 is for running GUI on the remote display
         # for mutplie env vars use
         # SetEnv ENV1=val1 ENV2=val2 ENV3=val3 ...
-        SetEnv DISPLAY=:0
+        SetEnv DISPLAY=:0 POWERLINE_UPDATE_TERMINAL_CWD=1
     ```
-
-
 2. generate a new SSH key
-    ```
-    ssh-keygen -t rsa -b 4096 -C "pokusew@ubuntu20-ros"
-    ```
+   ```bash
+   ssh-keygen -t rsa -b 4096 -C "pokusew@ubuntu20-ros"
+   ```
 3. transfer the key to the remote machine (will prompt for the login password)
-    ```
-    ssh-copy-id -i /Users/pokusew/.ssh/ubuntu20_ros_rsa.pub ubuntu20-ros
-    ```
+   ```bash
+   ssh-copy-id -i ~/.ssh/ubuntu20_ros_rsa.pub ubuntu20-ros
+   ```
+
 
 ### Install HSTR
 
@@ -65,8 +63,8 @@ Otherwise, a lot of commands will stop working (incl. `sudo`).
 Install via apt:
 ```bash
 sudo add-apt-repository ppa:ultradvorka/ppa
-sudo apt-get install hstr
 sudo apt-get update
+sudo apt-get install hstr
 ```
 
 No-need for configuration now. It will be done in the next step. Read below.
@@ -97,5 +95,5 @@ You will be prompted to enter your sudo password on the remote machine
 
 Then, restart SSH service on the remote machine (so the `/etc/ssh/sshd_config` takes effect):
 ```bash
-ssh -S ubuntu20-ros "sudo systemctl restart ssh"
+ssh ubuntu20-ros "sudo -S systemctl restart ssh"
 ```
