@@ -1,0 +1,83 @@
+# see also Power Management for Jetson TX2 Series Devices > Supported Modes and Power Efficiency
+#   https://docs.nvidia.com/jetson/l4t/#page/Tegra%20Linux%20Driver%20Package%20Development%20Guide/power_management_tx2_32.html#wwpID0E0DO0HA
+
+# Core IDs 1 and 2 represent Denver cores
+# Core IDs 0, 3, 4, and 5 represent A57 cores
+
+# aarch64
+
+# sudo nvpmodel -q –verbose
+NVPM WARN: fan mode is not set!
+NV Power Mode: MAXP_CORE_ARM
+3
+# note: "NVPM WARN: fan mode is not set!" should not matter
+        as someone on NVIDIA Dev Forums stated that it is intended only for Xavier
+
+NV Power Mode: MAXP_CORE_ARM
+# sudo jetson_clocks --show
+SOC family:tegra186  Machine:quill
+Online CPUs: 0,3-5
+cpu0: Online=1 Governor=schedutil MinFreq=345600 MaxFreq=2035200 CurrentFreq=2035200 IdleStates: C1=0 c7=0
+cpu1: Online=0 Governor=schedutil MinFreq=345600 MaxFreq=2035200 CurrentFreq=1420800 IdleStates: C1=0 c6=0 c7=0
+cpu2: Online=0 Governor=schedutil MinFreq=345600 MaxFreq=2035200 CurrentFreq=1420800 IdleStates: C1=0 c6=0 c7=0
+cpu3: Online=1 Governor=schedutil MinFreq=345600 MaxFreq=2035200 CurrentFreq=2035200 IdleStates: C1=0 c7=0
+cpu4: Online=1 Governor=schedutil MinFreq=345600 MaxFreq=2035200 CurrentFreq=1267200 IdleStates: C1=0 c7=0
+cpu5: Online=1 Governor=schedutil MinFreq=345600 MaxFreq=2035200 CurrentFreq=1267200 IdleStates: C1=0 c7=0
+GPU MinFreq=114750000 MaxFreq=1122000000 CurrentFreq=114750000
+EMC MinFreq=40800000 MaxFreq=1600000000 CurrentFreq=1600000000 FreqOverride=1
+Fan: PWM=0
+NV Power Mode: MAXP_CORE_ARM
+# sudo jetson_clocks --show (
+SOC family:tegra186  Machine:quill
+Online CPUs: 0,3-5
+cpu0: Online=1 Governor=schedutil MinFreq=2035200 MaxFreq=2035200 CurrentFreq=2035200 IdleStates: C1=0 c7=0
+cpu1: Online=0 Governor=schedutil MinFreq=345600 MaxFreq=2035200 CurrentFreq=2035200 IdleStates: C1=0 c6=0 c7=0
+cpu2: Online=0 Governor=schedutil MinFreq=345600 MaxFreq=2035200 CurrentFreq=2035200 IdleStates: C1=0 c6=0 c7=0
+cpu3: Online=1 Governor=schedutil MinFreq=2035200 MaxFreq=2035200 CurrentFreq=2035200 IdleStates: C1=0 c7=0
+cpu4: Online=1 Governor=schedutil MinFreq=2035200 MaxFreq=2035200 CurrentFreq=2035200 IdleStates: C1=0 c7=0
+cpu5: Online=1 Governor=schedutil MinFreq=2035200 MaxFreq=2035200 CurrentFreq=2035200 IdleStates: C1=0 c7=0
+GPU MinFreq=1122000000 MaxFreq=1122000000 CurrentFreq=1122000000
+EMC MinFreq=40800000 MaxFreq=1600000000 CurrentFreq=1600000000 FreqOverride=1
+Fan: PWM=255
+NV Power Mode: MAXP_CORE_ARM
+
+# cat /proc/cpuinfo
+processor	: 0
+model name	: ARMv8 Processor rev 3 (v8l)
+BogoMIPS	: 62.50
+Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32
+CPU implementer	: 0x41
+CPU architecture: 8
+CPU variant	: 0x1
+CPU part	: 0xd07
+CPU revision	: 3
+
+processor	: 3
+model name	: ARMv8 Processor rev 3 (v8l)
+BogoMIPS	: 62.50
+Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32
+CPU implementer	: 0x41
+CPU architecture: 8
+CPU variant	: 0x1
+CPU part	: 0xd07
+CPU revision	: 3
+
+processor	: 4
+model name	: ARMv8 Processor rev 3 (v8l)
+BogoMIPS	: 62.50
+Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32
+CPU implementer	: 0x41
+CPU architecture: 8
+CPU variant	: 0x1
+CPU part	: 0xd07
+CPU revision	: 3
+
+processor	: 5
+model name	: ARMv8 Processor rev 3 (v8l)
+BogoMIPS	: 62.50
+Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32
+CPU implementer	: 0x41
+CPU architecture: 8
+CPU variant	: 0x1
+CPU part	: 0xd07
+CPU revision	: 3
