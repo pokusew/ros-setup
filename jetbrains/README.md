@@ -16,6 +16,7 @@ TODO
 * `colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=1`
 * https://www.jetbrains.com/help/clion/2021.1/compilation-database.html
 * https://blog.jetbrains.com/clion/2021/01/working-with-meson-in-clion-using-compilation-db/
+* [CLion top level ROS2 Workspace CMakeLists](https://gist.github.com/rotu/1eac858b808b82bbf1b475f515e91636)
 
 
 ## PyCharm

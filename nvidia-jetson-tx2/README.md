@@ -64,6 +64,7 @@ JetPack is currently based on Ubuntu 18.
 * https://forums.developer.nvidia.com/t/how-to-generate-the-sd-card-flashable-image-for-tx2/79510/2
 * https://forums.developer.nvidia.com/t/tx2-sd-card-slot/51397/10
 * https://developer.nvidia.com/embedded/faq#jetson-differences-tx2i
+* https://forums.developer.nvidia.com/t/boot-jetson-tx2-from-sd-card-require-to-know-config-changes/51431
 
 
 
