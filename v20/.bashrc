@@ -27,6 +27,16 @@ __ros_jetbrains_ssh_helper_on_connection() {
 	# 	export PYTHONPATH_COPY="$PYTHONPATH"
 	# 	;;
 
+	# "25")
+	# 	# port 25 <-> ROS 2 /home/pokusew/remote/f1tenth-rewrite/ws project
+	# 	source /opt/ros/foxy/setup.bash
+	# 	if [[ -r /home/pokusew/remote/f1tenth-rewrite/ws/install/setup.bash ]]; then
+	# 		source /home/pokusew/remote/f1tenth-rewrite/ws/install/setup.bash
+	# 	fi
+	# 	# hack for PyCharm Remote Mode bug (used by fake-python.sh wrapper)
+	# 	export PYTHONPATH_COPY="$PYTHONPATH"
+	# 	;;
+
 	*)
 		# unknown port <-> ROS project mapping
 		;;
@@ -218,7 +228,7 @@ export RH_ROS_INSTALL_DIRS="/opt/ros"
 export RH_SRC="$HOME/rh.sh"
 # shellcheck disable=SC1090
 source "$RH_SRC"
-rh sw foxy --silent
+# rh sw foxy --silent
 # ROS_DOMAIN_ID: The domain ID is used to segment the network in order to avoid interference
 # between different groups of computers running ROS 2 on the same local area network.
 # Machines with different domain IDs will not talk, nor interfere, with each other.
@@ -300,3 +310,6 @@ source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
 export COLCON_EXTENSION_BLOCKLIST="colcon_core.event_handler.desktop_notification"
 
 alias ros-create-package-ros2-default='ros2 pkg create --license "Apache License 2.0" --maintainer-email "pokusew@seznam.cz" --maintainer-name "Martin Endler" '
+
+alias car-start="ros2 topic pub /eStop -1 std_msgs/msg/Bool 'data: False'"
+alias car-stop="ros2 topic pub /eStop -1 std_msgs/msg/Bool 'data: True'"
