@@ -220,3 +220,6 @@ export ROS_DOMAIN_ID=18
 #     UserWarning: The environment variable 'COLCON_EXTENSION_BLACKLIST' has been deprecated,
 #     use 'COLCON_EXTENSION_BLOCKLIST' instead
 # export COLCON_EXTENSION_BLOCKLIST="colcon_core.event_handler.desktop_notification"
+
+alias car-start="ros2 topic pub /eStop -1 std_msgs/msg/Bool 'data: False'"
+alias car-stop="ros2 topic pub /eStop -1 std_msgs/msg/Bool 'data: True'"
