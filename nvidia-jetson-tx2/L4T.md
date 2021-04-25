@@ -12,6 +12,9 @@ head -1 /etc/nv_tegra_release
 
 uname -a
 # Linux tx2-ros2 4.9.201-tegra #1 SMP PREEMPT Tue Mar 2 19:53:23 PST 2021 aarch64 aarch64 aarch64 GNU/Linux
+
+# from jtop terminal UI:
+# NVIDIA Jetson TX2 - Jetpack 4.5.1 [L4T 32.5.1]
 ```
 
 Original Python:

@@ -1,0 +1,10 @@
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/mmcblk2p1   59G   22G   35G  39% /
+none            3,5G     0  3,5G   0% /dev
+tmpfs           3,9G   88K  3,9G   1% /dev/shm
+tmpfs           3,9G   30M  3,9G   1% /run
+tmpfs           5,0M  4,0K  5,0M   1% /run/lock
+tmpfs           3,9G     0  3,9G   0% /sys/fs/cgroup
+tmpfs           786M   12K  786M   1% /run/user/120
+tmpfs           786M  116K  785M   1% /run/user/1000
+/dev/mmcblk0p1   28G   22G  5,0G  81% /media/nvidia/ec923b79-4da5-4f0a-a9df-1f96d39228e6
