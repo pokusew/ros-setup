@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/ubuntu-ros.iml" filepath="$PROJECT_DIR$/.idea/ubuntu-ros.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ros-setup.iml" filepath="$PROJECT_DIR$/.idea/ros-setup.iml" />
     </modules>
   </component>
 </project>
