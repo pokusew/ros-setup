@@ -1,8 +1,13 @@
-# Ubuntu setup notes for running ROS
+# Setup notes for using ROS
 
-Notes (my personal) on configuring a clean installation of Ubuntu (16 and 20) for running ROS 1 and ROS 2
+Setup notes (my personal) for using ROS 1 and ROS 2 on different platforms (Ubuntu, macOS, NVIDIA
+Jetson TX2).
 
-See:
+Also contains guides and tips for using ROS 1 and ROS 2 with IDEs (JetBrains CLion / PyCharm, Visual Studio Code).
+
+
+## Content
+
 * [notes for Ubuntu 20 with ROS 2](./v20/README.md)
 * [notes for VSCode](./vscode/README.md)
 * [notes for JetBrain's IDEs (CLion, PyCharm)](./jetbrains/README.md)
