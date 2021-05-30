@@ -75,3 +75,4 @@ TODO: categorize and split
 
 * https://askubuntu.com/questions/1197683/how-do-i-install-python-3-8-in-lubuntu-18-04
 * https://unix.stackexchange.com/questions/275824/simulate-the-running-of-a-make-install-a-dry-run-or-simulator-utility
+* https://unix.stackexchange.com/questions/591760/what-does-smp-preempt-rt-mean-in-uname-a
