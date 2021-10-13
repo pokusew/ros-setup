@@ -196,6 +196,34 @@ gapr() {
 }
 
 ###
+# nvm
+# source: https://github.com/nvm-sh/nvm#git-install
+###
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+
+###
+# yarn global symlinks directory (yarn global bin)
+# see https://classic.yarnpkg.com/en/docs/cli/global
+# setup:
+#   1) yarn config set prefix ~/.yarn (will store the config in ~/.yarnrc)
+#   2) install some useful global packages
+#   yarn global add \
+#   	node-gyp \
+#   	nodemon \
+#   	sort-package-json \
+#   	doctoc \
+#   	netlify-cli \
+#   	pkg \
+#   	cmake-js \
+#   	npm-check-updates
+###
+# export PATH="$(yarn global bin):$PATH"
+# to speed things up, inline the path directly:
+export PATH="$HOME/.yarn/bin:$PATH"
+
+###
 # ROS
 ###
 export RH_PROJECTS_DIRS="$HOME/code:$HOME/remote"
@@ -263,3 +291,7 @@ ros-set-master() {
 complete -W "local tx2-auto-3" ros-set-master
 
 ros-set-master "local" >/dev/null 2>&1
+
+# TODO: verify that it works
+alias car-start="rostopic pub -1 /eStop std_msgs/Bool 'data: False'"
+alias car-stop="rostopic pub -1 /eStop std_msgs/Bool 'data: True'"

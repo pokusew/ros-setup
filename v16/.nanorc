@@ -1,5 +1,3 @@
 # nano user config file
 # ~/.nanorc
 # man nanorc
-# see https://askubuntu.com/questions/73444/how-to-show-line-numbering-in-nano-when-opening-a-file
-set linenumbers
