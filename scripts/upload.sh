@@ -56,6 +56,7 @@ if [[ -r "$version/ssh_config" ]]; then
 fi
 if [[ -r "$version/htoprc" ]]; then
 	echo "... uploading $version/htoprc to ~/.config/htop/htoprc"
+	ssh "$remote" "mkdir -p ~/.config/htop/"
 	scp "$version/htoprc" "$remote":.config/htop/htoprc
 fi
 
