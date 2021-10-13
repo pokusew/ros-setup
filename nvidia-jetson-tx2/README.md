@@ -15,6 +15,8 @@ These are separate pages:
 * https://developer.nvidia.com/embedded/community/support-resources
 * https://docs.nvidia.com/jetson/l4t/
 
+* [MAXN, MAXQ, MAXP CORE ALL, MAXP CORE ARM](https://docs.nvidia.com/jetson/l4t/#page/Tegra%20Linux%20Driver%20Package%20Development%20Guide/power_management_tx2_32.html#wwpID0E0OO0HA)
+
 * https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-tx2/
 * https://developer.nvidia.com/embedded/downloads#?tx=$product,jetson_tx2
 

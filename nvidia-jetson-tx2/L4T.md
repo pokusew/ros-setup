@@ -13,8 +13,17 @@ head -1 /etc/nv_tegra_release
 uname -a
 # Linux tx2-ros2 4.9.201-tegra #1 SMP PREEMPT Tue Mar 2 19:53:23 PST 2021 aarch64 aarch64 aarch64 GNU/Linux
 
-# from jtop terminal UI:
+lsb_release -a
+# No LSB modules are available.
+# Distributor ID:	Ubuntu
+# Description:	Ubuntu 18.04.6 LTS
+# Release:	18.04
+# Codename:	bionic
+
+# from jtop terminal UI (initial):
 # NVIDIA Jetson TX2 - Jetpack 4.5.1 [L4T 32.5.1]
+# from jtop terminal UI (after some apt upgrading):
+# NVIDIA Jetson TX2 - Jetpack UNKNOWN [L4T 32.5.2]
 ```
 
 Original Python:
