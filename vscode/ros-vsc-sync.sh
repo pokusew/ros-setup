@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# see https://github.com/pokusew/ubuntu-ros/blob/master/vscode/README.md
+# see https://github.com/pokusew/ros-setup/blob/master/vscode/README.md
 
 find_project_root() {
 

@@ -243,7 +243,7 @@ It copies and configures:
 * `/etc/ssh/sshd_config` (only when `upload.sh --all` option is used, see below)
 * see contents of [upload.sh](../scripts/upload.sh) script for more info
 
-Run in the root of this project (`ubuntu-ros`) on your local machine:
+Run in the root of this project (`ros-setup`) on your local machine:
 ```bash
 ./scripts/upload.sh nvidia-jetson-tx2 tx2-ros2 --all
 ```
