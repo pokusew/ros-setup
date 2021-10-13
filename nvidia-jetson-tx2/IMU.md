@@ -10,15 +10,16 @@
 	* [Hookup Guide][sparkfun-sen-14001-hookup-guide]
 
 * ROS integration
-	* [razor_imu_9dof][razor_imu_9dof-gh]
+	* [razor_imu_9dof][razor_imu_9dof-gh] _(that's the one we currently use with ROS 1)_
 		* [ROS Wiki][razor_imu_9dof-ros-wiki] (including info about calibration)
 		* [ROS Index][razor_imu_9dof-ros-index-kinetic]
 		* [GitHub][razor_imu_9dof-gh]
 		* requires a [modified version][razor-9dof-ahrs-modified] of the [Razor-AHRS/razor-9dof-ahrs][razor-9dof-ahrs]
 		  firmware instead of the factory-programmed ["example" firmware][sparkfun-sen-14001-gh]
 		* at least one ROS 2 port exists
-			* see [github.com/klintan/ros2_razor_imu](https://github.com/klintan/ros2_razor_imu)
-	* https://github.com/mitll-ros-pkg/razor_imu_m0_driver
+			* my fixed version [github.com/klintan/ros2_razor_imu](https://github.com/pokusew/ros2_razor_imu)
+			* original [github.com/klintan/ros2_razor_imu](https://github.com/klintan/ros2_razor_imu)
+	* https://github.com/mitll-ros-pkg/razor_imu_m0_driver _(no plan to use this one)_
 		* supports SparkFun 9DoF Razor IMU M0 with **the
 		  factory-programmed ["example" firmware][sparkfun-sen-14001-gh]**
 
