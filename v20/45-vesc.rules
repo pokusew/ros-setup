@@ -1,0 +1,5 @@
+# installed by VESC Tool 3.00
+# -rw-rw-r-- 1 pokusew pokusew 126 Oct 15 12:44 /lib/udev/rules.d/45-vesc.rules
+#
+# Prevent modemmanager from grabbing the VESC
+ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", ENV{ID_MM_DEVICE_IGNORE}="1"
