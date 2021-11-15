@@ -8,10 +8,10 @@ see https://docs.nvidia.com/jetson/l4t/
 Useful commands:
 ```bash
 head -1 /etc/nv_tegra_release
-# # R32 (release), REVISION: 5.1, GCID: 26202423, BOARD: t186ref, EABI: aarch64, DATE: Fri Feb 19 16:50:29 UTC 2021
+# # R32 (release), REVISION: 5.2, GCID: 27767740, BOARD: t186ref, EABI: aarch64, DATE: Fri Jul  9 16:05:07 UTC 2021
 
 uname -a
-# Linux tx2-ros2 4.9.201-tegra #1 SMP PREEMPT Tue Mar 2 19:53:23 PST 2021 aarch64 aarch64 aarch64 GNU/Linux
+# Linux tx2-ros2 4.9.201-tegra #1 SMP PREEMPT Mon Jul 26 10:47:01 EDT 2021 aarch64 aarch64 aarch64 GNU/Linux
 
 lsb_release -a
 # No LSB modules are available.
@@ -20,9 +20,7 @@ lsb_release -a
 # Release:	18.04
 # Codename:	bionic
 
-# from jtop terminal UI (initial):
-# NVIDIA Jetson TX2 - Jetpack 4.5.1 [L4T 32.5.1]
-# from jtop terminal UI (after some apt upgrading):
+# from jtop terminal UI (for Jetpack 4.5.2):
 # NVIDIA Jetson TX2 - Jetpack UNKNOWN [L4T 32.5.2]
 ```
 
