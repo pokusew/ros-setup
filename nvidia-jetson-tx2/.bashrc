@@ -212,14 +212,16 @@ export ROS_DOMAIN_ID=18
 # export _colcon_cd_root=/opt/ros/foxy
 # source /usr/share/colcon_cd/function/colcon_cd.sh
 # see https://colcon.readthedocs.io/en/released/user/installation.html#enable-completion
-# source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
+if [ -f /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash ]; then
+	/usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
+fi
 # disable colcon desktop notifications by default (system-wide)
 # see https://github.com/colcon/colcon-notification/issues/31
 # also note:
 #   /usr/lib/python3/dist-packages/colcon_core/entry_point.py:152:
 #     UserWarning: The environment variable 'COLCON_EXTENSION_BLACKLIST' has been deprecated,
 #     use 'COLCON_EXTENSION_BLOCKLIST' instead
-# export COLCON_EXTENSION_BLOCKLIST="colcon_core.event_handler.desktop_notification"
+export COLCON_EXTENSION_BLOCKLIST="colcon_core.event_handler.desktop_notification"
 
 alias car-start="ros2 topic pub /eStop -1 std_msgs/msg/Bool 'data: False'"
 alias car-stop="ros2 topic pub /eStop -1 std_msgs/msg/Bool 'data: True'"
