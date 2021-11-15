@@ -4,6 +4,7 @@
 	* [Hokuyo USA product page][hokuyo-ust-10lx-usa]
 	* [Hokuyo Japan product page][hokuyo-ust-10lx-jp]
 	* [Hokuyo 10LX Ethernet Connection Setup][f1tenth-docs-hokuyo-setup] in the F1Tenth docs
+	* [Hokuyo UST-10LX in the CTU's K335 Redmine][hokuyo-ust-10lx-ctu-k335-redmine]
 	* Communication protocol: SCIP2.2,
 	  see [C-42-04076.pdf](https://www.generationrobots.com/media/Hokuyo%20UST-10LX/UST-10LX_20LX_SCIP_specifications_C-42-04076.pdf)
 	* Ethernet communication initial values:
@@ -19,6 +20,8 @@
 [hokuyo-ust-10lx-jp]: https://www.hokuyo-aut.jp/search/single.php?serial=167
 
 [f1tenth-docs-hokuyo-setup]: https://f1tenth.readthedocs.io/en/latest/getting_started/firmware/firmware_hokuyo10.html
+
+[hokuyo-ust-10lx-ctu-k335-redmine]: https://redmine.felk.cvut.cz/projects/f1tenth/wiki/Hokuyo_UST-10LX
 
 [urg_node-galactic]: https://index.ros.org/r/urg_node/#galactic
 
