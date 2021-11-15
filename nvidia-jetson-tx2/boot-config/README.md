@@ -1,5 +1,7 @@
 # Boot Config of NVIDIA Jetson TX2
 
+See https://www.jetsonhacks.com/2017/01/26/run-jetson-tx1-sd-card/.
+
 
 ## Notes:
 

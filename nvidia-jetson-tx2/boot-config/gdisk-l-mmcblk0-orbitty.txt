@@ -1,0 +1,54 @@
+GPT fdisk (gdisk) version 1.0.3
+
+The protective MBR's 0xEE partition is oversized! Auto-repairing.
+
+Partition table scan:
+  MBR: protective
+  BSD: not present
+  APM: not present
+  GPT: present
+
+Found valid GPT with protective MBR; using GPT.
+Disk /dev/mmcblk0: 61071360 sectors, 29.1 GiB
+Sector size (logical/physical): 512/512 bytes
+Disk identifier (GUID): 298F27AB-38F9-4809-8A6C-F34048EA0274
+Partition table holds up to 128 entries
+Main partition table begins at sector 2 and ends at sector 33
+First usable sector is 4097, last usable sector is 61071327
+Partitions will be aligned on 8-sector boundaries
+Total free space is 8 sectors (4.0 KiB)
+
+Number  Start (sector)    End (sector)  Size       Code  Name
+   1            4104        58724359   28.0 GiB    0700  APP
+   2        58724360        58732551   4.0 MiB     0700  mts-bootpack
+   3        58732552        58740743   4.0 MiB     0700  mts-bootpack_b
+   4        58740744        58741767   512.0 KiB   0700  cpu-bootloader
+   5        58741768        58742791   512.0 KiB   0700  cpu-bootloader_b
+   6        58742792        58743815   512.0 KiB   0700  bootloader-dtb
+   7        58743816        58744839   512.0 KiB   0700  bootloader-dtb_b
+   8        58744840        58750983   3.0 MiB     0700  secure-os
+   9        58750984        58757127   3.0 MiB     0700  secure-os_b
+  10        58757128        58761223   2.0 MiB     0700  eks
+  11        58761224        58769415   4.0 MiB     0700  adsp-fw
+  12        58769416        58777607   4.0 MiB     0700  adsp-fw_b
+  13        58777608        58778815   604.0 KiB   0700  bpmp-fw
+  14        58778816        58780023   604.0 KiB   0700  bpmp-fw_b
+  15        58780024        58782071   1024.0 KiB  0700  bpmp-fw-dtb
+  16        58782072        58784119   1024.0 KiB  0700  bpmp-fw-dtb_b
+  17        58784120        58788215   2.0 MiB     0700  sce-fw
+  18        58788216        58792311   2.0 MiB     0700  sce-fw_b
+  19        58792312        58804599   6.0 MiB     0700  sc7
+  20        58804600        58816887   6.0 MiB     0700  sc7_b
+  21        58816888        58820983   2.0 MiB     0700  FBNAME
+  22        58820984        59083127   128.0 MiB   0700  BMP
+  23        59083128        59345271   128.0 MiB   0700  BMP_b
+  24        59345272        59474295   63.0 MiB    0700  recovery
+  25        59474296        59475319   512.0 KiB   0700  recovery-dtb
+  26        59475320        59475831   256.0 KiB   0700  kernel-bootctrl
+  27        59475832        59476343   256.0 KiB   0700  kernel-bootctrl_b
+  28        59476344        59640183   80.0 MiB    0700  kernel
+  29        59640184        59804023   80.0 MiB    0700  kernel_b
+  30        59804024        59805047   512.0 KiB   0700  kernel-dtb
+  31        59805048        59806071   512.0 KiB   0700  kernel-dtb_b
+  32        59806072        60420471   300.0 MiB   0700  RECROOTFS
+  33        60420472        61071326   317.8 MiB   0700  UDA
