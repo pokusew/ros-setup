@@ -117,7 +117,12 @@ EOF
 
 update_dot_env_file() {
 	echo "updating $PWD/.env file ..."
-	echo "PYTHONPATH=$1" >.env
+	if [[ -n $2 && -n $3 ]]; then
+		# remap paths
+		echo "PYTHONPATH=${1//$2/$3}" >.env
+	else
+		echo "PYTHONPATH=$1" >.env
+	fi
 	echo "  >>> created $PWD/.env file"
 }
 
@@ -139,9 +144,12 @@ update_local_python() {
 
 		# .env defines PYTHONPATH variable . It is also used by VSCode's Python support.
 		# load and export (maybe not needed) PYTHONPATH variable definition
+		# append the original PYTHONPATH at the end
+		PYTHONPATH_ORIG="\$PYTHONPATH"
 		source "$PWD/.env"
+		PYTHONPATH="\$PYTHONPATH\${PYTHONPATH_ORIG:+:\$PYTHONPATH_ORIG}"
 		export PYTHONPATH
-		# run Python add pass-trough all the arguments
+		# run Python and pass-trough all the arguments
 		exec "$(command -v python3)" "\$@"
 	EOF
 	echo "  >>> created $PWD/python.local.sh file"
@@ -159,28 +167,62 @@ get_compilation_db() {
 
 }
 
+# find the project root
 if ! RH_PROJECT_ROOT=$(find_project_root "$@"); then
 	echo "no project root found"
 	exit 1
 fi
 
-cd "$RH_PROJECT_ROOT" || exit 1
-echo "project root = $PWD"
+# load the project config
 # shellcheck disable=SC1090
 source "$RH_PROJECT_ROOT/.rh_project"
 if [[ -z $RH_WORKSPACE_ROOT ]]; then
 	echo "RH_WORKSPACE_ROOT is not set"
 	exit 1
 fi
-echo "workspace root = $RH_WORKSPACE_ROOT"
 
-if SOURCED_PYTHONPATH=$(source_workspace_env "$RH_WORKSPACE_ROOT"); then
-	update_dot_env_file "$SOURCED_PYTHONPATH"
+# determine absolute path to the workspace
+cd "$RH_PROJECT_ROOT" || exit 1
+cd "$RH_WORKSPACE_ROOT" || exit 1
+RH_WORKSPACE_ROOT_ABSOLUTE="$PWD"
+
+# jump back to to the project root from where we will do all the work
+cd "$RH_PROJECT_ROOT" || exit 1
+
+# determine the PYTHONPATH workaround dir for JetBrains IDEs
+RH_PYTHONPATH_WORKAROUND_DIR_EFFECTIVE="${1-"$RH_PYTHONPATH_WORKAROUND_DIR"}"
+
+# determine the project name
+RH_PROJECT_NAME="${RH_PROJECT_NAME-$(basename "$PWD")}"
+
+# print determined values
+echo "project root = $RH_PROJECT_ROOT"
+echo "project name = $RH_PROJECT_NAME"
+echo "workaround dir for PYTHONPATH = ${RH_PYTHONPATH_WORKAROUND_DIR_EFFECTIVE:-"(not set)"}"
+echo "workspace root = $RH_WORKSPACE_ROOT_ABSOLUTE"
+echo "--------------"
+
+# create symlinks to the workspace's build and install dirs in the PYTHONPATH workaround dir (if desired)
+if [[ -n $RH_PYTHONPATH_WORKAROUND_DIR_EFFECTIVE ]]; then
+	echo "creating build and install symlinks in $RH_PYTHONPATH_WORKAROUND_DIR_EFFECTIVE ..."
+	rm -rf "${RH_PYTHONPATH_WORKAROUND_DIR_EFFECTIVE:?"unexpected unset or empty jetbrains_pythonpath_workaround_dir"}/$RH_PROJECT_NAME"
+	mkdir -p "$RH_PYTHONPATH_WORKAROUND_DIR_EFFECTIVE/$RH_PROJECT_NAME"
+	ln -s "$RH_WORKSPACE_ROOT_ABSOLUTE/build" "$RH_PYTHONPATH_WORKAROUND_DIR_EFFECTIVE/$RH_PROJECT_NAME/build"
+	echo "  >>> created $RH_PYTHONPATH_WORKAROUND_DIR_EFFECTIVE/$RH_PROJECT_NAME/build that points to $RH_WORKSPACE_ROOT_ABSOLUTE/build"
+	ln -s "$RH_WORKSPACE_ROOT_ABSOLUTE/install" "$RH_PYTHONPATH_WORKAROUND_DIR_EFFECTIVE/$RH_PROJECT_NAME/install"
+	echo "  >>> created $RH_PYTHONPATH_WORKAROUND_DIR_EFFECTIVE/$RH_PROJECT_NAME/install that points to $RH_WORKSPACE_ROOT_ABSOLUTE/install"
+fi
+
+if SOURCED_PYTHONPATH=$(source_workspace_env "$RH_WORKSPACE_ROOT_ABSOLUTE"); then
+	update_dot_env_file \
+		"$SOURCED_PYTHONPATH" \
+		"${RH_PYTHONPATH_WORKAROUND_DIR_EFFECTIVE:+"$RH_WORKSPACE_ROOT_ABSOLUTE"}" \
+		"${RH_PYTHONPATH_WORKAROUND_DIR_EFFECTIVE:+"$RH_PYTHONPATH_WORKAROUND_DIR_EFFECTIVE/$RH_PROJECT_NAME"}"
 	update_local_python
 	update_vscode_settings "$SOURCED_PYTHONPATH"
 fi
 
-if [[ -r $RH_WORKSPACE_ROOT/build/compile_commands.json && ! -e compile_commands.json ]]; then
-	ln -s "$RH_WORKSPACE_ROOT/build/compile_commands.json" compile_commands.json
+if [[ -r "$RH_WORKSPACE_ROOT_ABSOLUTE/build/compile_commands.json" && ! -e "$RH_PROJECT_ROOT/compile_commands.json" ]]; then
+	ln -s "$RH_WORKSPACE_ROOT_ABSOLUTE/build/compile_commands.json" "$RH_PROJECT_ROOT/compile_commands.json"
 	echo "created symlink to compile_commands.json in the project root"
 fi
