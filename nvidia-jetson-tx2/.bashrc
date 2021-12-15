@@ -205,6 +205,7 @@ source "$RH_SRC"
 # Machines with different domain IDs will not talk, nor interfere, with each other.
 # see https://docs.ros.org/en/foxy/Tutorials/Configuring-ROS2-Environment.html#the-ros-domain-id-variable
 export ROS_DOMAIN_ID=18
+export CYCLONEDDS_URI="file:///home/nvidia/code/dds/cyclonedds.xml"
 
 # colcon - ROS 2 meta-build tool
 # see https://colcon.readthedocs.io/en/released/user/installation.html#quick-directory-changes
@@ -213,7 +214,7 @@ export ROS_DOMAIN_ID=18
 # source /usr/share/colcon_cd/function/colcon_cd.sh
 # see https://colcon.readthedocs.io/en/released/user/installation.html#enable-completion
 if [ -f /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash ]; then
-	/usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
+	source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
 fi
 # disable colcon desktop notifications by default (system-wide)
 # see https://github.com/colcon/colcon-notification/issues/31
@@ -225,3 +226,10 @@ export COLCON_EXTENSION_BLOCKLIST="colcon_core.event_handler.desktop_notificatio
 
 alias car-start="ros2 topic pub /eStop -1 std_msgs/msg/Bool 'data: False'"
 alias car-stop="ros2 topic pub /eStop -1 std_msgs/msg/Bool 'data: True'"
+
+alias sl='source install/setup_local.bash'
+alias s='source install/setup.bash'
+alias b='source ~/code/base/install/setup.bash'
+alias g='source ~/ros/galactic/install/setup.bash'
+alias ws-clean='rm -rf build/ install/ log/'
+alias ws-build='colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=1'
