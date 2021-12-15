@@ -5,5 +5,20 @@ See https://www.jetsonhacks.com/2017/01/26/run-jetson-tx1-sd-card/.
 
 ## Notes:
 
-Files from [mmcblk0 (Internal EMMC)](./mmcblk0) and [mmcblk2 (SD Card)](./mmcblk2) are from the `/boot/extlinux/`
-directory. They must be root owned (`sudo chown root * && sudo chgrp root *`).
+* U-Boot device names:
+	* `mmcblk0` = internal eMMC
+	* `mmcblk2` = SD card (as enumerated on JetPack 4.5.x)
+	* `mmcblk1` = SD card (as enumerated on JetPack 3.x)
+* U-Boot versions:
+	* tx2-auto-3 (JetPack 3.x)
+		* Tegra186 (P2771-0000-500) # help
+		* U-Boot 2016.07-g9c3b9a4 (May 17 2018 - 00:08:48 -0700)
+		  aarch64-unknown-linux-gnu-gcc (GCC) 4.8.5 GNU ld (GNU Binutils) 2.24
+	* tx2-ros2 (JetPack 4.5.x)
+		*
+* serial console on Jetson TX2
+    * Connection speed is **115200, with 8 bits, no parity, and 1 stop bit (115200 8N1)**. For these three wire cables,
+      the correct setting is software control, no hardware control. If you choose a 5 wire setup with RTS and CTS lines,
+      then select hardware control, and no software control.
+    * `screen /dev/tty.usbserial-A50285BI 115200`, exit with `Ctrl-A Ctrl-\`
+    * see also this article on [JetsonHacks](https://www.jetsonhacks.com/2015/12/01/serial-console-nvidia-jetson-tx1/)
