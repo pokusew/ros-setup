@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+	Cyclone DDS Configuration
+	https://github.com/eclipse-cyclonedds/cyclonedds#configuration
+	https://github.com/eclipse-cyclonedds/cyclonedds/blob/master/docs/manual/options.md
+	https://github.com/eclipse-cyclonedds/cyclonedds/blob/master/docs/manual/config.rst
+-->
+<CycloneDDS
+	xmlns="https://cdds.io/config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd"
+>
+	<Domain Id="any">
+		<General>
+			<NetworkInterfaceAddress>en3</NetworkInterfaceAddress>
+		</General>
+	</Domain>
+</CycloneDDS>
