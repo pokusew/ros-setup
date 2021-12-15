@@ -1,6 +1,6 @@
 # Setup notes for NVIDIA Jetson TX2 with ROS 2
 
-_Note: These are currently rather my personal notes on setting up a NVIDIA Jetson TX2 from scratch._
+_Note: These are currently rather my personal notes on setting up an NVIDIA Jetson TX2 from scratch._
 
 
 ## Setup
@@ -48,6 +48,7 @@ entry `127.0.1.1	some-new-hostname`. Otherwise, a lot of commands will stop work
    ```bash
    ssh-copy-id -i ~/.ssh/tx2-ros2.pub tx2-ros2
    ```
+
 
 ### Install HSTR
 
@@ -106,7 +107,7 @@ sudo apt install libncursesw5-dev
 cd ~/code
 git clone https://github.com/htop-dev/htop.git
 cd htop
-git checkout 3.1.0
+git checkout 3.1.1
 ./autogen.sh && ./configure && make
 sudo make install
 
@@ -143,28 +144,64 @@ sudo apt install nano
 ```
 
 
+### Upgrade CMake
+
+Ubuntu 18 ships CMake 3.10. However, during the ROS 2 build, at least one package (foonathan_memory_vendor) requires
+CMake 3.11. So we install the latest CMake from the [Kitware APT repository](https://apt.kitware.com/):
+```bash
+# 1. uninstall the default version shipped from Ubuntu repos
+sudo apt remove --purge --auto-remove cmake
+# 2. obtain a copy of Kitware's signing key
+wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
+# 3. add the repository to the sources list and update
+echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ bionic main' | sudo tee /etc/apt/sources.list.d/kitware.list >/dev/null
+sudo apt-get update
+# 4. install the kitware-archive-keyring package to ensure that the keyring stays up to date as Kitware rotate their keys
+sudo rm /usr/share/keyrings/kitware-archive-keyring.gpg
+sudo apt-get install kitware-archive-keyring
+# 5. install the latest CMake from the Kitware APT repository
+sudo apt-get install cmake
+# 6. verify the version (cmake version 3.21.3 is the latest as of November 15, 2021)
+cmake --version
+```
+
+**Useful info:**
+* [Kitware APT repository usage guide](https://apt.kitware.com/)
+* [StackOverflow: How do I install the latest version of cmake from the command line?](https://askubuntu.com/questions/355565/how-do-i-install-the-latest-version-of-cmake-from-the-command-line)
+
+
 ### Install ROS 2
 
-As there currently no ROS 2 Foxy binaries for Ubuntu 18, we have to **build ROS 2 Fox from sources**.
+ROS 2 Galactic targets Ubuntu Focal Fossa (20.04) and prebuilt binaries are available only for Ubuntu 20.04.
+
+JetPack 4.x is based on Ubuntu Bionic Beaver 18.04. According to the
+official [NVIDIA Jetson Roadmap](https://developer.nvidia.com/embedded/develop/roadmap), JetPack 5.x (which is scheduled
+as Developer Preview for Q1 2022) will be based on Ubuntu 20.
+
+As there are currently no ROS 2 Galactic binaries for Ubuntu 18, we have to **build ROS 2 Galactic from sources**
+(and maybe face some minor incompatibility issues) or we can run **ROS 2 Galactic in Docker containers**.
 
 **Resources:**
-* [Building ROS 2 on Ubuntu Linux (official ROS 2 Foxy docs)](https://docs.ros.org/en/foxy/Installation/Ubuntu-Development-Setup.html)
-* for inspiration: [Dockerfile.ros.foxy](https://github.com/dusty-nv/jetson-containers/blob/master/Dockerfile.ros.foxy)
-  in [dusty-nv/jetson-containers](https://github.com/dusty-nv/jetson-containers)
+* [Building ROS 2 Galactic on Ubuntu Linux (official ROS 2 Galactic docs)](https://docs.ros.org/en/galactic/Installation/Ubuntu-Development-Setup.html)
+* ROS 2 Galactic base Docker image for
+  L4T: [Dockerfile.ros.galactic](https://github.com/dusty-nv/jetson-containers/blob/master/Dockerfile.ros.galactic)
+  from [dusty-nv/jetson-containers](https://github.com/dusty-nv/jetson-containers)
 
+
+#### Building ROS 2 from sources
 
 ```bash
 
 # Add ROS 2 apt repository
-# see https://docs.ros.org/en/foxy/Installation/Ubuntu-Development-Setup.html#add-the-ros-2-apt-repository
+# see https://docs.ros.org/en/galactic/Installation/Ubuntu-Development-Setup.html#add-the-ros-2-apt-repository
 sudo apt install curl gnupg2
 sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
 sudo apt update
 
 # Install development tools and ROS tools
-# see https://docs.ros.org/en/foxy/Installation/Ubuntu-Development-Setup.html#install-development-tools-and-ros-tools
-# see https://github.com/dusty-nv/jetson-containers/blob/master/Dockerfile.ros.foxy#L33
+# see https://docs.ros.org/en/galactic/Installation/Ubuntu-Development-Setup.html#install-development-tools-and-ros-tools
+# see https://github.com/dusty-nv/jetson-containers/blob/master/Dockerfile.ros.galactic#L44
 sudo apt install \
 	build-essential \
 	cmake \
@@ -196,40 +233,29 @@ python3 -m pip install -U \
 	pytest-rerunfailures \
 	pytest
 
-# Install some missing dependencies
-# see https://github.com/dusty-nv/jetson-containers/blob/master/Dockerfile.ros.foxy#L68
-# compile yaml-cpp-0.6, which some ROS packages may use (but is not in the 18.04 apt repo)
-cd ~/code
-git clone --branch yaml-cpp-0.6.0 https://github.com/jbeder/yaml-cpp yaml-cpp-0.6
-cd yaml-cpp-0.6
-mkdir build
-cd build
-cmake -DBUILD_SHARED_LIBS=ON ..
-make -j$(nproc)
-sudo cp libyaml-cpp.so.0.6.0 /usr/lib/aarch64-linux-gnu/
-sudo ln -s /usr/lib/aarch64-linux-gnu/libyaml-cpp.so.0.6.0 /usr/lib/aarch64-linux-gnu/libyaml-cpp.so.0.6
-
 # Get ROS 2 code
-# see https://docs.ros.org/en/foxy/Installation/Ubuntu-Development-Setup.html#get-ros-2-code
-# see also https://github.com/dusty-nv/jetson-containers/blob/master/Dockerfile.ros.foxy#L78
-mkdir -p ~/ros/foxy/src
-cd ~/ros/foxy
-# rosinstall_generator --deps --rosdistro foxy ros_base launch_xml launch_yaml example_interfaces > ros2.foxy.ros_base.rosinstall
-# cat ros2.foxy.ros_base.rosinstall
-wget https://raw.githubusercontent.com/ros2/ros2/foxy/ros2.repos
+# see https://docs.ros.org/en/galactic/Installation/Ubuntu-Development-Setup.html#get-ros-2-code
+# see also https://github.com/dusty-nv/jetson-containers/blob/master/Dockerfile.ros.galactic#L78
+mkdir -p ~/ros/galactic/src
+cd ~/ros/galactic
+wget https://raw.githubusercontent.com/ros2/ros2/galactic/ros2.repos
 vcs import src < ros2.repos
 
 # Install dependencies using rosdep
-# see https://docs.ros.org/en/foxy/Installation/Ubuntu-Development-Setup.html#install-dependencies-using-rosdep
-# see https://github.com/dusty-nv/jetson-containers/blob/master/Dockerfile.ros.foxy#L96
+# see https://docs.ros.org/en/galactic/Installation/Ubuntu-Development-Setup.html#install-dependencies-using-rosdep
+# see https://github.com/dusty-nv/jetson-containers/blob/master/Dockerfile.ros.galactic#L96
 sudo rosdep init
 rosdep update
-rosdep install --from-paths src --ignore-src --rosdistro foxy -y --skip-keys "console_bridge fastcdr fastrtps rti-connext-dds-5.3.1 urdfdom_headers"
+rosdep install -y \
+	--ignore-src \
+	--from-paths src \
+	--rosdistro galactic \
+	--skip-keys "fastcdr rti-connext-dds-5.3.1 urdfdom_headers"
 
 # Build the code in the workspace
-# see https://docs.ros.org/en/foxy/Installation/Ubuntu-Development-Setup.html#build-the-code-in-the-workspace
-colcon build --symlink-install
-
+# see https://docs.ros.org/en/galactic/Installation/Ubuntu-Development-Setup.html#build-the-code-in-the-workspace
+# see https://github.com/dusty-nv/jetson-containers/blob/master/Dockerfile.ros.galactic#L152
+colcon build --merge-install
 ```
 
 
@@ -255,3 +281,13 @@ Then, restart SSH service on the remote machine (so the `/etc/ssh/sshd_config` t
 ```bash
 ssh tx2-ros2 "sudo -S systemctl restart ssh"
 ```
+
+
+### Add udev rules for USB devices
+
+See [UDEV.md](./UDEV.md).
+
+
+### Create a bootable SD card
+
+See [these notes](./boot-config/README.md).
