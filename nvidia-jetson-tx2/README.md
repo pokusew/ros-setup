@@ -3,11 +3,17 @@
 
 ## Docs
 
-These are separate pages:
-* [SETUP](./SETUP.md)
-* [TODO](./TODO.md)
+General:
+* 👉 **[SETUP](./SETUP.md)** 👈
+* [L4T and JetPack](./L4T.md)
 * [proc-cpuinfo.txt](./proc-cpuinfo.txt)
-* [L4T](./L4T.md)
+* [OS and software versions](./VERSIONS.md)
+* [TODO](./TODO.md)
+
+AV hardware:
+* [LIDAR](./LIDAR.md)
+* [VESC](./VESC.md)
+* [IMU](./IMU.md)
 
 
 ## General
@@ -75,8 +81,8 @@ JetPack is currently based on Ubuntu 18.
 
 ## Serial console
 
-* https://www.jetsonhacks.com/2017/03/24/serial-console-nvidia-jetson-tx2/
-* https://connecttech.com/resource-center/kdb347-reassigning-disable-serial-debug-connect-tech-tx1-carriers/
+* See [the Boot config notes](./boot-config/README.md) for links about using the serial console.
+* [Connect Tech kdb347: Disable Serial Debug Console on Connect Tech TX2/TX1 Carriers](https://connecttech.com/product/orbitty-carrier-for-nvidia-jetson-tx2-tx1/)
 
 
 ## Orbitty Carrier for NVIDIA Jetson TX2/TX2i

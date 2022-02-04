@@ -285,7 +285,12 @@ ssh tx2-ros2 "sudo -S systemctl restart ssh"
 
 ### Add udev rules for USB devices
 
-See [UDEV.md](./UDEV.md).
+See [UDEV](./UDEV.md).
+
+
+### Configure the network
+
+See [NETWORK](./NETWORK.md).
 
 
 ### Create a bootable SD card

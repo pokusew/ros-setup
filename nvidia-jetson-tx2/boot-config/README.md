@@ -17,8 +17,16 @@ See https://www.jetsonhacks.com/2017/01/26/run-jetson-tx1-sd-card/.
 	* tx2-ros2 (JetPack 4.5.x)
 		*
 * serial console on Jetson TX2
-    * Connection speed is **115200, with 8 bits, no parity, and 1 stop bit (115200 8N1)**. For these three wire cables,
-      the correct setting is software control, no hardware control. If you choose a 5 wire setup with RTS and CTS lines,
-      then select hardware control, and no software control.
-    * `screen /dev/tty.usbserial-A50285BI 115200`, exit with `Ctrl-A Ctrl-\`
-    * see also this article on [JetsonHacks](https://www.jetsonhacks.com/2015/12/01/serial-console-nvidia-jetson-tx1/)
+	* Connection speed is **115200, with 8 bits, no parity, and 1 stop bit (115200 8N1)**. For these three wire cables,
+	  the correct setting is software control, no hardware control. If you choose a 5 wire setup with RTS and CTS lines,
+	  then select hardware control, and no software control.
+	* `screen /dev/tty.usbserial-A50285BI 115200`, exit with `Ctrl-A Ctrl-\`
+	* See also [this article][tx2-serial-console] (for TX2)
+	  or [this one][tx1-serial-console] (for TX1) (almost same). Both were both published
+	  on [JetsonHacks](https://www.jetsonhacks.com)
+
+
+
+[tx2-serial-console]: https://www.jetsonhacks.com/2017/03/24/serial-console-nvidia-jetson-tx2/
+
+[tx1-serial-console]: https://connecttech.com/resource-center/kdb347-reassigning-disable-serial-debug-connect-tech-tx1-carriers/
