@@ -1,0 +1,29 @@
+
++ /home/
++ /home/nvidia/
++ /home/nvidia/.bashrc
++ /home/nvidia/.bash_history
++ /home/nvidia/.tmux.conf
++ /home/nvidia/.gitconfig
++ /home/nvidia/.nanorc
++ /home/nvidia/.config/
++ /home/nvidia/.config/htop/
++ /home/nvidia/.config/htop/htoprc
++ /home/nvidia/.ssh/
++ /home/nvidia/.ssh/*
+
++ /etc/
+
++ /etc/udev/
++ /etc/udev/rules.d/
++ /etc/udev/rules.d/50-f1tenth-hw.rules
+
++ /etc/ssh/
++ /etc/ssh/sshd_config
+
++ /etc/NetworkManager/
++ /etc/NetworkManager/system-connections/
++ /etc/NetworkManager/system-connections/lidar
++ /etc/NetworkManager/system-connections/eth1-dhcp-wan
+
+- /**

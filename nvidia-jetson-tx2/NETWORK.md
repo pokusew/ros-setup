@@ -62,3 +62,5 @@ iface eth0 inet static
 				* a new line at the end: `options bcmdhd op_mode=2`
 			2. use `sudo nmcli device wifi hotspot ifname wlan0 ssid tx2-ros2 password galactic2021`
 			3. alter the connection (IP address, auto start, etc.)
+	* export nmcli connections:
+        * https://unix.stackexchange.com/questions/351005/how-to-export-and-migrate-networkmanager-settings-to-new-system
