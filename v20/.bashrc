@@ -233,7 +233,7 @@ source "$RH_SRC"
 # between different groups of computers running ROS 2 on the same local area network.
 # Machines with different domain IDs will not talk, nor interfere, with each other.
 # see https://docs.ros.org/en/foxy/Tutorials/Configuring-ROS2-Environment.html#the-ros-domain-id-variable
-export ROS_DOMAIN_ID=16
+export ROS_DOMAIN_ID=18
 
 # TODO: once merge in rh
 # usage: rh-set-master <target>
@@ -313,3 +313,5 @@ alias ros-create-package-ros2-default='ros2 pkg create --license "Apache License
 
 alias car-start="ros2 topic pub /eStop -1 std_msgs/msg/Bool 'data: False'"
 alias car-stop="ros2 topic pub /eStop -1 std_msgs/msg/Bool 'data: True'"
+
+export RMW_IMPLEMENTATION="rmw_fastrtps_cpp"
