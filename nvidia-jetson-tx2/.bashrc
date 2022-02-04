@@ -233,3 +233,5 @@ alias b='source ~/code/base/install/setup.bash'
 alias g='source ~/ros/galactic/install/setup.bash'
 alias ws-clean='rm -rf build/ install/ log/'
 alias ws-build='colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=1'
+
+export RMW_IMPLEMENTATION="rmw_fastrtps_cpp"
