@@ -72,11 +72,16 @@ source_workspace_env() {
 
 update_vscode_settings() {
 
-	echo "updating $PWD/.vscode/settings.json ..."
+	local correct_pythonpath_after_sourcing="$1"
 
-	mkdir -p .vscode
+	local vscode_dir="$PWD/.vscode"
+	mkdir -p "$vscode_dir"
 
-	python3 "-" "$1" <<"EOF"
+	local settings_json="$vscode_dir/settings.json"
+
+	echo "updating $settings_json ..."
+
+	python3 "-" "$correct_pythonpath_after_sourcing" <<"EOF"
 import sys
 import json
 
@@ -111,7 +116,36 @@ except FileNotFoundError as err:
 	print(f'  FileNotFoundError: {err}', file=sys.stderr)
 EOF
 
-	echo "  >>> updated $PWD/.vscode/settings.json"
+	echo "  >>> updated $settings_json"
+
+	local c_cpp_properties_json="$vscode_dir/c_cpp_properties.json"
+
+	echo "updating $settings_json ..."
+
+	if [[ ! -e "$c_cpp_properties_json" ]]; then
+		echo "  >> created $c_cpp_properties_json"
+		cat >"$PWD/.vscode/c_cpp_properties" <<"EOF"
+{
+    "configurations": [
+        {
+            "name": "ROS 2",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c99",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "linux-gcc-x64",
+            "compileCommands": "${workspaceFolder}/compile_commands.json"
+        }
+    ],
+    "version": 4
+}
+EOF
+	else
+		echo "  >> $c_cpp_properties_json already exists"
+	fi
 
 }
 
@@ -167,18 +201,19 @@ get_compilation_db() {
 
 }
 
-# find the project root
-if ! RH_PROJECT_ROOT=$(find_project_root "$@"); then
-	echo "no project root found"
-	exit 1
-fi
-
-# load the project config
-# shellcheck disable=SC1090
-source "$RH_PROJECT_ROOT/.rh_project"
-if [[ -z $RH_WORKSPACE_ROOT ]]; then
-	echo "RH_WORKSPACE_ROOT is not set"
-	exit 1
+# find the project root (if possible)
+if RH_PROJECT_ROOT=$(find_project_root "$@"); then
+	# load the project config
+	# shellcheck disable=SC1090
+	source "$RH_PROJECT_ROOT/.rh_project"
+	if [[ -z $RH_WORKSPACE_ROOT ]]; then
+		echo "RH_WORKSPACE_ROOT is not set"
+		exit 1
+	fi
+else
+	echo "no project root found, using current working directory as project root"
+	RH_PROJECT_ROOT="$PWD"
+	RH_WORKSPACE_ROOT="$RH_PROJECT_ROOT"
 fi
 
 # determine absolute path to the workspace
