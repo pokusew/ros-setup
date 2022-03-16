@@ -124,7 +124,7 @@ EOF
 
 	if [[ ! -e "$c_cpp_properties_json" ]]; then
 		echo "  >> created $c_cpp_properties_json"
-		cat >"$PWD/.vscode/c_cpp_properties" <<"EOF"
+		cat >"$c_cpp_properties_json" <<"EOF"
 {
     "configurations": [
         {
