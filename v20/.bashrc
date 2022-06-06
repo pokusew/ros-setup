@@ -315,3 +315,14 @@ alias car-start="ros2 topic pub /eStop -1 std_msgs/msg/Bool 'data: False'"
 alias car-stop="ros2 topic pub /eStop -1 std_msgs/msg/Bool 'data: True'"
 
 export RMW_IMPLEMENTATION="rmw_fastrtps_cpp"
+
+export AUTO_WORKSPACE="$HOME/code/f1tenth-rewrite/ws"
+source "$AUTO_WORKSPACE/src/auto/scripts/auto.sh"
+
+alias sl='test -f install/setup_local.bash && source install/setup_local.bash || source devel/setup_local.bash'
+alias s='test -f install/setup.bash && source install/setup.bash || source devel/setup.bash'
+alias f='source /opt/ros/foxy/setup.bash'
+alias g='source /opt/ros/galactic/setup.bash'
+alias ws-clean='rm -rf build/ install/ log/ .env'
+alias ws-clean-all='rm -rf build/ install/ log/ .env .vscode/ python.local.sh compile_commands.json'
+alias ws-build='colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=1'

@@ -3,3 +3,5 @@
 	name = Martin Endler
 	email = pokusew@seznam.cz
 
+[pull]
+	ff = only
