@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-# see https://github.com/pokusew/ros-setup/blob/master/vscode/README.md
+# original source: https://raw.githubusercontent.com/pokusew/ros-setup/master/ide/ros-ide-sync.sh
+# ros_ide_sync_version="0.0.1"
+# see https://github.com/pokusew/ros-setup/blob/master/ide/README.md
 
 find_project_root() {
 
