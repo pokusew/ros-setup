@@ -60,11 +60,6 @@ if [[ -r "$version/htoprc" ]]; then
 	scp "$version/htoprc" "$remote":.config/htop/htoprc
 fi
 
-echo "... uploading jetbrains/ros-jetbrains-ssh-auto.sh"
-scp jetbrains/ros-jetbrains-ssh-auto.sh "$remote":ros-jetbrains-ssh-auto.sh
-echo "... uploading jetbrains/fake_python.sh"
-scp jetbrains/fake_python.sh "$remote":fake_python.sh
-
-echo "... uploading vscode/ros-vsc-sync.sh"
+echo "... uploading ide/ros-ide-sync.sh"
 ssh "$remote" "mkdir -p bin"
-scp vscode/ros-vsc-sync.sh "$remote":bin/ros-vsc-sync
+scp ide/ros-ide-sync.sh "$remote":bin/ros-ide-sync
