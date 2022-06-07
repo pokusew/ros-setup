@@ -12,7 +12,7 @@
 >
 	<Domain Id="any">
 		<General>
-			<NetworkInterfaceAddress>en3</NetworkInterfaceAddress>
+			<NetworkInterfaceAddress>en0</NetworkInterfaceAddress>
 		</General>
 	</Domain>
 </CycloneDDS>
