@@ -63,8 +63,8 @@ entry `127.0.1.1	some-new-hostname`. Otherwise, a lot of commands will stop work
 Install via apt:
 ```bash
 sudo add-apt-repository ppa:ultradvorka/ppa
-sudo apt-get update
-sudo apt-get install hstr
+sudo apt update
+sudo apt install hstr
 ```
 
 No-need for configuration now. It will be done in the next step. Read below.
