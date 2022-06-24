@@ -84,7 +84,7 @@ sudo apt install libevent-dev libncurses5-dev
 cd ~/code
 git clone https://github.com/tmux/tmux.git
 cd tmux
-git checkout 3.2a
+git checkout 3.3a
 sh autogen.sh
 ./configure && make
 sudo make install
@@ -107,7 +107,7 @@ sudo apt install libncursesw5-dev
 cd ~/code
 git clone https://github.com/htop-dev/htop.git
 cd htop
-git checkout 3.1.1
+git checkout 3.2.1
 ./autogen.sh && ./configure && make
 sudo make install
 
