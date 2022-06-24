@@ -116,7 +116,7 @@ fi
 export EDITOR="nano"
 
 # not needed if running on default installation of Ubuntu 20
-# as its default ~/.profile already does this (if the directory exists)
+# as its default ~/.profile already does this (but only if the directory exists)
 export PATH="$HOME/bin:$PATH"
 
 alias bre='source ~/.bashrc'
