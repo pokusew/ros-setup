@@ -43,5 +43,3 @@ captures
 
 # other things
 /nvidia-jetson-tx2/boot-config/tx2-auto-3/linux-headers-4.4.38-tegra/
-# TODO: add to Git in the future
-/ros-nvidia/
