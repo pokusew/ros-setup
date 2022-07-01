@@ -1,43 +1,9 @@
 # ~/.bashrc: executed by bash(1) for non-login shells
 
-# it is called automatically when ~/ros-jetbrains-ssh-auto.sh is sourced
-# and upon invocation it is automatically also unset
-__ros_jetbrains_ssh_helper_on_connection() {
-
-	# $1 is the SSH port
-	case $1 in
-
-	# "25")
-	# 	# port 25 <-> ROS 2 /home/pokusew/remote/f1tenth-rewrite/ws project
-	# 	source /opt/ros/foxy/setup.bash
-	# 	if [[ -r /home/pokusew/remote/f1tenth-rewrite/ws/install/setup.bash ]]; then
-	# 		source /home/pokusew/remote/f1tenth-rewrite/ws/install/setup.bash
-	# 	fi
-	# 	# hack for PyCharm Remote Mode bug (used by fake-python.sh wrapper)
-	# 	export PYTHONPATH_COPY="$PYTHONPATH"
-	# 	;;
-
-	*)
-		# unknown port <-> ROS project mapping
-		;;
-
-	esac
-
-}
-
 # If not running interactively, don't do anything
 case $- in
-*i*)
-	# running interactively
-	;;
-
-*)
-	# hack for ROS via Remote Mode of JetBrain's IDEs (CLion, PyCharm)
-	# shellcheck disable=SC1090
-	source ~/ros-jetbrains-ssh-auto.sh
-	# don't do anything else
-	return
-	;;
+*i*) ;;
+*) return ;;
 esac
 
 ###
@@ -46,8 +12,8 @@ esac
 # with shell history suggest box for Bash and zsh.
 # source: https://github.com/dvorka/hstr
 ###
-export HH_CONFIG=hicolor                                          # get more colors
-shopt -s histappend                                               # append new history items to .bash_history
+export HH_CONFIG=hicolor # get more colors
+shopt -s histappend      # append new history items to .bash_history
 # export HISTCONTROL=ignorespace # leading space hides commands from history
 export HISTCONTROL=ignoreboth                                     # see https://askubuntu.com/a/15929
 export HISTFILESIZE=10000                                         # increase history file size (default is 500)
@@ -89,7 +55,9 @@ fi
 # shellcheck disable=SC2034
 # enables login@hostname in pokusew-bash-powerline prompt
 POWERLINE_LOGIN=1
-source "$HOME/pokusew-bash-powerline.sh"
+if [[ -f "$HOME/pokusew-bash-powerline.sh" ]]; then
+	source "$HOME/pokusew-bash-powerline.sh"
+fi
 
 ###
 # enable color support of ls and also add handy aliases
@@ -145,16 +113,14 @@ if ! shopt -oq posix; then
 fi
 
 ###
-# NVIDIA Jetson TX2's CUDA
-###
-export PATH="/usr/local/cuda-10.2/bin:$PATH"
-export LD_LIBRARY_PATH="/usr/local/cuda-10.2/lib64:$LD_LIBRARY_PATH"
-
-###
 # utils
 ###
 export EDITOR="nano"
+
+# not needed if running on default installation of Ubuntu 20
+# as its default ~/.profile already does this (but only if the directory exists)
 export PATH="$HOME/bin:$PATH"
+
 alias bre='source ~/.bashrc'
 alias bed='nano ~/.bashrc'
 
@@ -162,6 +128,8 @@ alias bed='nano ~/.bashrc'
 # Git shortcuts
 ###
 alias gst="git status"
+# gh is GitHub CLI (https://github.com/cli/cli)
+alias gho="gh repo view --web"
 # see https://git-scm.com/docs/git-log
 # see https://stackoverflow.com/a/1441062
 alias glog2="git log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=short-local"
@@ -175,6 +143,19 @@ alias glog2="git log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %
 # "E" if the signature cannot be checked (e.g. missing key) and "N" for no signature
 alias glog="git log --pretty=format:'%C(auto,yellow)%h%C(auto,magenta)% G? %C(auto,blue)%ad %C(auto,green)%aN%C(auto,red)%d%C(auto,reset) %s' --date=format-local:'%Y-%m-%d %H:%M'"
 alias glog-tags="glog --no-walk --all" # optionally use --tags instead of --all
+gapr() {
+	echo "Running after PR rebase sequence ..."
+	echo "branch = '$1'"
+	if [[ -z $1 ]]; then
+		echo "No branch specified!"
+		return 1
+	fi
+	git checkout master &&
+		git push origin ":$1" &&
+		git pull && git fetch --all --prune &&
+		git branch -D "$1" &&
+		echo "Finished."
+}
 
 ###
 # pip3 autocompletion
@@ -194,11 +175,13 @@ alias glog-tags="glog --no-walk --all" # optionally use --tags instead of --all
 ###
 # ROS
 ###
-export RH_PROJECTS_DIRS="$HOME/code:$HOME/remote"
+export RH_PROJECTS_DIRS="$HOME/code"
 export RH_ROS_INSTALL_DIRS="/opt/ros"
 export RH_SRC="$HOME/rh.sh"
-# shellcheck disable=SC1090
-source "$RH_SRC"
+if [[ -f "$RH_SRC" ]]; then
+	# shellcheck disable=SC1090
+	source "$RH_SRC"
+fi
 # rh sw foxy --silent
 # ROS_DOMAIN_ID: The domain ID is used to segment the network in order to avoid interference
 # between different groups of computers running ROS 2 on the same local area network.
@@ -209,17 +192,68 @@ export ROS_DOMAIN_ID=18
 # colcon - ROS 2 meta-build tool
 # see https://colcon.readthedocs.io/en/released/user/installation.html#quick-directory-changes
 # see https://docs.ros.org/en/foxy/Tutorials/Configuring-ROS2-Environment.html#add-colcon-cd-to-your-shell-startup-script
-# export _colcon_cd_root=/opt/ros/foxy
-# source /usr/share/colcon_cd/function/colcon_cd.sh
+export _colcon_cd_root=/opt/ros/foxy
+if [[ -f /usr/share/colcon_cd/function/colcon_cd.sh ]]; then
+	source /usr/share/colcon_cd/function/colcon_cd.sh
+fi
 # see https://colcon.readthedocs.io/en/released/user/installation.html#enable-completion
-# source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
+if [[ -f /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash ]]; then
+	source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
+fi
 # disable colcon desktop notifications by default (system-wide)
 # see https://github.com/colcon/colcon-notification/issues/31
 # also note:
 #   /usr/lib/python3/dist-packages/colcon_core/entry_point.py:152:
 #     UserWarning: The environment variable 'COLCON_EXTENSION_BLACKLIST' has been deprecated,
 #     use 'COLCON_EXTENSION_BLOCKLIST' instead
-# export COLCON_EXTENSION_BLOCKLIST="colcon_core.event_handler.desktop_notification"
+export COLCON_EXTENSION_BLOCKLIST="colcon_core.event_handler.desktop_notification"
+
+alias ros-create-package-ros2-default='ros2 pkg create --license "Apache License 2.0" --maintainer-email "pokusew@seznam.cz" --maintainer-name "Martin Endler" '
 
 alias car-start="ros2 topic pub /eStop -1 std_msgs/msg/Bool 'data: False'"
 alias car-stop="ros2 topic pub /eStop -1 std_msgs/msg/Bool 'data: True'"
+
+export RMW_IMPLEMENTATION="rmw_fastrtps_cpp"
+
+export AUTO_WORKSPACE="$HOME/code/f1tenth-rewrite/ws"
+if [[ -d $AUTO_WORKSPACE ]]; then
+	source "$AUTO_WORKSPACE/src/auto/scripts/auto.sh"
+fi
+
+sl() {
+
+	if [[ -f install/setup_local.bash ]]; then
+		source install/setup_local.bash
+		return 0
+	fi
+
+	if [[ -f devel/setup_local.bash ]]; then
+		source devel/setup_local.bash
+		return 0
+	fi
+
+	echo "No setup_local.bash found!" 1>&2
+	return 1
+
+}
+s() {
+
+	if [[ -f install/setup.bash ]]; then
+		source install/setup.bash
+		return 0
+	fi
+
+	if [[ -f devel/setup.bash ]]; then
+		source devel/setup.bash
+		return 0
+	fi
+
+	echo "No setup.bash found!" 1>&2
+	return 1
+
+}
+alias f='source /opt/ros/foxy/setup.bash'
+alias g='source /opt/ros/galactic/setup.bash'
+alias ws-clean='rm -rf build/ install/ log/ .env'
+alias ws-clean-all='rm -rf build/ install/ log/ .env .vscode/ python.local.sh compile_commands.json'
+alias ws-build='colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=1'
