@@ -226,8 +226,10 @@ gapr() {
 export RH_PROJECTS_DIRS="$HOME/code:$HOME/remote"
 export RH_ROS_INSTALL_DIRS="/opt/ros"
 export RH_SRC="$HOME/rh.sh"
-# shellcheck disable=SC1090
-source "$RH_SRC"
+if [[ -f "$RH_SRC" ]]; then
+	# shellcheck disable=SC1090
+	source "$RH_SRC"
+fi
 # rh sw foxy --silent
 # ROS_DOMAIN_ID: The domain ID is used to segment the network in order to avoid interference
 # between different groups of computers running ROS 2 on the same local area network.
@@ -298,9 +300,13 @@ complete -W "local tx2-auto-3" ros-set-master
 # see https://colcon.readthedocs.io/en/released/user/installation.html#quick-directory-changes
 # see https://docs.ros.org/en/foxy/Tutorials/Configuring-ROS2-Environment.html#add-colcon-cd-to-your-shell-startup-script
 export _colcon_cd_root=/opt/ros/foxy
-source /usr/share/colcon_cd/function/colcon_cd.sh
+if [[ -f /usr/share/colcon_cd/function/colcon_cd.sh ]]; then
+	source /usr/share/colcon_cd/function/colcon_cd.sh
+fi
 # see https://colcon.readthedocs.io/en/released/user/installation.html#enable-completion
-source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
+if [[ -f /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash ]]; then
+	source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
+fi
 # disable colcon desktop notifications by default (system-wide)
 # see https://github.com/colcon/colcon-notification/issues/31
 # also note:
@@ -319,8 +325,38 @@ export RMW_IMPLEMENTATION="rmw_fastrtps_cpp"
 export AUTO_WORKSPACE="$HOME/code/f1tenth-rewrite/ws"
 source "$AUTO_WORKSPACE/src/auto/scripts/auto.sh"
 
-alias sl='test -f install/setup_local.bash && source install/setup_local.bash || source devel/setup_local.bash'
-alias s='test -f install/setup.bash && source install/setup.bash || source devel/setup.bash'
+sl() {
+
+	if [[ -f install/setup_local.bash ]]; then
+		source install/setup_local.bash
+		return 0
+	fi
+
+	if [[ -f devel/setup_local.bash ]]; then
+		source devel/setup_local.bash
+		return 0
+	fi
+
+	echo "No setup_local.bash found!" 1>&2
+	return 1
+
+}
+s() {
+
+	if [[ -f install/setup.bash ]]; then
+		source install/setup.bash
+		return 0
+	fi
+
+	if [[ -f devel/setup.bash ]]; then
+		source devel/setup.bash
+		return 0
+	fi
+
+	echo "No setup.bash found!" 1>&2
+	return 1
+
+}
 alias f='source /opt/ros/foxy/setup.bash'
 alias g='source /opt/ros/galactic/setup.bash'
 alias ws-clean='rm -rf build/ install/ log/ .env'
