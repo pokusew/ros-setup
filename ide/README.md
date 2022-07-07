@@ -15,8 +15,8 @@ How to get full autocompletion for ROS in your IDE.
 - [JetBrains IDEs (CLion, PyCharm) and ROS](#jetbrains-ides-clion-pycharm-and-ros)
 	- [Common](#common)
 	- [CLion + ROS 2 (same system)](#clion--ros-2-same-system)
-- [Other scenarios](#other-scenarios)
-- [Related links](#related-links)
+	- [Other scenarios](#other-scenarios)
+	- [Related links](#related-links)
 - [VSCode and ROS](#vscode-and-ros)
 	- [Setup ROS 2 and VSCode](#setup-ros-2-and-vscode)
 	- [Files in the workspace](#files-in-the-workspace)
@@ -90,7 +90,7 @@ It's a standalone Bash script. You can download it, place it anywhere, and run i
 ## JetBrains IDEs (CLion, PyCharm) and ROS
 
 What's **great** on JetBrains IDEs:
-* Autocompletion, linting, IntelliSense, Git integration, other code assistance and overall features are **superior** to
+* Autocompletion, linting, IntelliSense, Git integration, coding assistance and overall features are **superior** to
   other editors/IDEs.
 
 
@@ -107,7 +107,7 @@ There are two different situations to consider:
 Further, ROS 2 setup is different from ROS 1 setup.
 
 The best JetBrains IDE to use is **CLion** as it has also Python support (so it will work as well as PyCharm). However,
-CLion does NOT support remote Python interpreter.
+CLion does NOT support remote Python interpreter and Jupyter notebooks (you can always use PyCharm for that).
 
 
 ### CLion + ROS 2 (same system)
@@ -128,17 +128,18 @@ by [`ros-ide-sync`](#ros-ide-sync-script) script that fixes `PYTHONPATH`).
 	   interpreter as the project's Python interpreter.
 
 
-## Other scenarios
+### Other scenarios
 
 All combinations of ROS 1 / ROS 2, local/remote are possible to use. I tried them all, but I haven't got time to
 document the setup (yet). In case you need help, feel free to contact me. Nevertheless, the remote mode in JetBrains
 IDEs is not good and for remote work I recommend [VSCode](#vscode-and-ros).
 
 
-## Related links
+### Related links
 
-* (ROS 1) https://www.jetbrains.com/help/clion/ros-setup-tutorial.html
-* (not recommend)
+* [Official CLion Help > ROS 1 setup tutorial](https://www.jetbrains.com/help/clion/ros-setup-tutorial.html)
+* [Official CLion Help > ROS 2 setup tutorial](https://www.jetbrains.com/help/clion/ros2-tutorial.html)
+* (not recommend, just for reference)
   [CLion top level ROS2 Workspace CMakeLists](https://gist.github.com/rotu/1eac858b808b82bbf1b475f515e91636)
 * (plugin for ROS 1, but also usable for ROS 2) https://github.com/duckietown/hatchery
 * https://www.reddit.com/r/ROS/comments/hkpgao/ros2_and_clion/
@@ -155,7 +156,7 @@ What's **great** on VSCode:
 
 
 What's **not so good** on VSCode:
-* Autocomplete, linting, IntelliSense, other code assistance, Git integration and overall features are **way worse**
+* Autocomplete, linting, IntelliSense, coding assistance, Git integration and overall features are **way worse**
   than what CLion offers.
 
 
