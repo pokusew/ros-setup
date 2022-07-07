@@ -66,8 +66,8 @@ esac
 # with shell history suggest box for Bash and zsh.
 # source: https://github.com/dvorka/hstr
 ###
-export HH_CONFIG=hicolor                                          # get more colors
-shopt -s histappend                                               # append new history items to .bash_history
+export HH_CONFIG=hicolor # get more colors
+shopt -s histappend      # append new history items to .bash_history
 # export HISTCONTROL=ignorespace # leading space hides commands from history
 export HISTCONTROL=ignoreboth                                     # see https://askubuntu.com/a/15929
 export HISTFILESIZE=10000                                         # increase history file size (default is 500)
@@ -322,8 +322,10 @@ alias car-stop="ros2 topic pub /eStop -1 std_msgs/msg/Bool 'data: True'"
 
 export RMW_IMPLEMENTATION="rmw_fastrtps_cpp"
 
-export AUTO_WORKSPACE="$HOME/code/f1tenth-rewrite/ws"
-source "$AUTO_WORKSPACE/src/auto/scripts/auto.sh"
+export AUTO_WORKSPACE="$HOME/code/f1tenth-rewrite"
+if [[ -f "$AUTO_WORKSPACE/src/auto/scripts/auto.sh" ]]; then
+	source "$AUTO_WORKSPACE/src/auto/scripts/auto.sh"
+fi
 
 sl() {
 
