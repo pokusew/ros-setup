@@ -107,7 +107,7 @@ by [`ros-ide-sync`](#ros-ide-sync-script) script that fixes `PYTHONPATH`).
 
 All combinations of ROS 1 / ROS 2, local/remote are possible to use. I tried them all, but I haven't got time to
 document the setup (yet). In case you need help, feel free to contact me. Nevertheless, the remote mode in JetBrains
-IDEs is not good and for remote work and recommend [VSCode](../vscode/README.md).
+IDEs is not good and for remote work I recommend [VSCode](#vscode-and-ros).
 
 
 ## Related links
