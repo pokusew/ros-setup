@@ -10,6 +10,7 @@ How to get full autocompletion for ROS in your IDE.
 
 - [`ros-ide-sync` script](#ros-ide-sync-script)
 	- [Usage](#usage)
+		- [Tip: colcon `compile-commands` mixin](#tip-colcon-compile-commands-mixin)
 	- [Installation](#installation)
 - [JetBrains IDEs (CLion, PyCharm) and ROS](#jetbrains-ides-clion-pycharm-and-ros)
 	- [Common](#common)
@@ -36,6 +37,30 @@ In order for the C++ autocompletion to work correctly, you need to enable **Comp
 build:
 ```bash
 colcon build --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=1
+```
+
+
+#### Tip: colcon `compile-commands` mixin
+
+Instead of having to write (and remember) `--cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=1` arguments over and over, you
+can use a [colcon mixin](https://colcon.readthedocs.io/en/released/reference/verb/mixin.html) from
+the [default colcon mixin repository](https://github.com/colcon/colcon-mixin-repository/).
+
+If you've never used colcon mixins before, you'll have to do an initial set up:
+```bash
+# 1. install colcon mixin plugin via apt
+sudo apt install python3-colcon-mixin
+# or via pip
+python3 -m pip install -U colcon-mixin
+# 2. add default mixins repository and download the mixins from it
+#    see https://github.com/colcon/colcon-mixin-repository/
+colcon mixin add default https://raw.githubusercontent.com/colcon/colcon-mixin-repository/master/index.yaml
+colcon mixin update default
+```
+
+Then, you can use the `compile-commands` mixin like this:
+```bash
+colcon build --mixin compile-commands
 ```
 
 
