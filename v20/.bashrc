@@ -322,11 +322,6 @@ alias car-stop="ros2 topic pub /eStop -1 std_msgs/msg/Bool 'data: True'"
 
 export RMW_IMPLEMENTATION="rmw_fastrtps_cpp"
 
-export AUTO_WORKSPACE="$HOME/code/f1tenth-rewrite"
-if [[ -f "$AUTO_WORKSPACE/src/auto/scripts/auto.sh" ]]; then
-	source "$AUTO_WORKSPACE/src/auto/scripts/auto.sh"
-fi
-
 sl() {
 
 	if [[ -f install/setup_local.bash ]]; then
