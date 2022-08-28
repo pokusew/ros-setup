@@ -13,6 +13,8 @@ export FASTRTPS_DEFAULT_PROFILES_FILE=""
 
 ## Cyclone DDS
 
+See the comments in [cyclonedds.xml](./cyclonedds.xml) for the file structure.
+
 ```bash
 export CYCLONEDDS_URI="file:///home/nvidia/code/dds/cyclonedds.xml"
 ```
