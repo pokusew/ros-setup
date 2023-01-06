@@ -298,4 +298,10 @@ TODO: I have some tips and tricks about the following topics I need to write up:
 	* files vs. directories
 	* added and removed files
 * speeding up colcon build using `--packages-select` (or `--packages-up-to`)
+* apt
+	* `apt list --installed`
+	* `apt list --installed | grep -i ros`
+	* `dpkg -L <package name>`
+	* `sudo dpkg -r --force-depends ros-rolling-tracetools`
 * handling parameters at scale (using asterisk `*` in params files)
+* index.ros.org
