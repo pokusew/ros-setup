@@ -19,7 +19,10 @@ sudo udevadm control --reload
 ```
 
 
-## Disable ModemManager
+## Setup
+
+
+### 1. Disable ModemManager
 
 Beware of ModemManager on Ubuntu, it can collide with serial port devices (it can grab/claim them, causing unnecessary
 delays). The best way is to uninstall it if it is not needed:
@@ -36,22 +39,21 @@ Alternatively, it is possible to configure it to avoid grabbing specific devices
 * [VESC Tool's 45-vesc.rules workaround](../v20/45-vesc.rules)
 
 
-## Add user to the `dialout` group
+### 2. Add user `nvidia` to the `dialout` group
 
+* `sudo usermod -a -G dialout nvidia` – add user `nvidia` to the `dialout` group. Do not forget to **reboot** as _group
+  membership of a user only takes effect on the next login._
+
+Notes:
 * **dialout:** _Full and direct access to serial ports. Members of this group can reconfigure the modem, dial anywhere,
   etc._
 * see https://wiki.debian.org/SystemGroups
 * `groups` – list groups of which the current user is a member
-* `sudo usermod -a -G dialout nvidia` – add user `nvidia` to the `dialout` group. Do not forget to **reboot** as _group
-  membership of a user only takes effect on the next login._
 * [SO: usermod vs adduser](https://askubuntu.com/questions/1011809/difference-between-adduser-and-usermod-g-a)
 * `getent group` – list all groups together with their members
 
 
-## Rules
-
-
-### F1Tenth
+### 3. Create rules for F1Tenth
 
 3 USB 2 devices:
 * VESC (Enertion FOCBOX VESC X)
@@ -68,6 +70,8 @@ EOF
 
 
 ## Example: Change device permissions
+
+Not needed, just for reference.
 
 ```bash
 echo 'ACTION=="add", SUBSYSTEM=="tty", ATTRS{product}=="SFE 9DOF-D21", OWNER="pokusew", GROUP="pokusew", MODE="0660", SYMLINK+="tty.imu"' | sudo tee /etc/udev/rules.d/99-custom-hw.rules
