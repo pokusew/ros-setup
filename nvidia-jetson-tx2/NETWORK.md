@@ -53,14 +53,50 @@ iface eth0 inet static
 	* disable IPv6
 		* https://unix.stackexchange.com/questions/569515/why-does-the-interface-have-an-ipv6-address-with-ipv6-disabled
 	* `ll /etc/NetworkManager/system-connections/`
-	* **Jetson TX2 as Wireless Access Point**
-		* see https://github.com/surendrallam/Jetson-TX2-as-Wireless-Access-Point-WAP
-		* see https://fedoramagazine.org/internet-connection-sharing-networkmanager/
-		* setup:
-			1. enable AP mode in the Wi-Fi TX2 driver (this breaks normal Wi-Fi functionality)
-				* `sudo nano /etc/modprobe.d/bcmdhd.conf`
-				* a new line at the end: `options bcmdhd op_mode=2`
-			2. use `sudo nmcli device wifi hotspot ifname wlan0 ssid tx2-ros2 password galactic2021`
-			3. alter the connection (IP address, auto start, etc.)
 	* export nmcli connections:
-        * https://unix.stackexchange.com/questions/351005/how-to-export-and-migrate-networkmanager-settings-to-new-system
+		* https://unix.stackexchange.com/questions/351005/how-to-export-and-migrate-networkmanager-settings-to-new-system
+
+
+## Setup
+
+Useful commands:
+```bash
+sudo nmcli connection up [conn-name]
+sudo nmcli connection down [conn-name]
+sudo systemctl restart NetworkManager
+```
+
+1. **Jetson TX2 as Wireless Access Point**
+	* setup:
+		1. Enable AP mode in the Wi-Fi TX2 driver. Note that this breaks normal (e.g. client) Wi-Fi functionality.
+		   Add a new line `options bcmdhd op_mode=2` at the end of the file `/etc/modprobe.d/bcmdhd.conf`. You can use
+		   the following command for that:
+			* `echo 'options bcmdhd op_mode=2' | sudo tee -a /etc/modprobe.d/bcmdhd.conf`
+			* **Reboot** before continuing with the next step.
+		2. Create the nmcli connection describing the
+		   AP: `sudo nmcli device wifi hotspot ifname wlan0 ssid tx2-ros2 password galactic2021`
+		3. Alter the connection details:
+		   ```bash
+		   sudo nmcli connection modify Hotspot con-name hotspot
+		   sudo nmcli connection modify hotspot connection.autoconnect yes
+		   sudo nmcli connection modify hotspot ipv4.addresses 192.168.33.1/24
+		   ```
+	* see https://github.com/surendrallam/Jetson-TX2-as-Wireless-Access-Point-WAP
+	* see https://fedoramagazine.org/internet-connection-sharing-networkmanager/
+2. **eth0 for LiDAR**
+	* First, we rename the default `Wired connection 1` to `lidar` and then we configure it:
+	  ```bash
+	  sudo nmcli connection modify Wired\ connection\ 1 con-name lidar
+	  sudo nmcli connection modify lidar connection.interface-name eth0
+	  sudo nmcli connection modify lidar ipv4.addresses 192.168.0.22/24
+	  sudo nmcli connection modify lidar ipv4.method manual
+	  sudo nmcli connection modify lidar connection.autoconnect yes
+	  ```
+3. **Ethernet-to-USB adapter (eth1) for Internet / LAN access**
+	* First, we rename the automatically (i.e., upon first connection) created connection `eth1` to `eth1-dhcp-wan`
+	  and then we configure it:
+     ```bash
+     sudo nmcli connection modify eth1 con-name eth1-dhcp-wan
+     sudo nmcli connection modify eth1-dhcp-wan connection.interface-name eth1
+     sudo nmcli connection modify eth1-dhcp-wan connection.autoconnect yes
+     ```
